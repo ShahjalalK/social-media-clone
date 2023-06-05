@@ -35,7 +35,7 @@ const UserMenu = (props: Props) => {
       <div className="text-center text-white opacity-95 cursor-pointer">
         <IoMdNotifications className="text-3xl" />
       </div>
-      <Dropdown label={<Avatar size="sm" rounded />} inline={true} arrowIcon={false}>
+      <Dropdown label={<Avatar img={userStateValue.photoURL} size="sm" rounded className="bg-white rounded-full border" />} inline={true} arrowIcon={false}>
         <Dropdown.Item>
           <Link href="/u/[profileId]" as={`/u/${userStateValue.uid}`}>
             <p className=" font-medium">{userStateValue.displayName || userStateValue.email?.split("@")[0]}</p>

@@ -7,8 +7,7 @@ import TopPost from "@/components/profilePage/topPost";
 import { auth, firestore } from "@/firebase/firebase.config";
 import { UserType, userDataState } from "@/recoil/userAtom";
 import { doc, getDoc } from "firebase/firestore";
-import { Spinner } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 

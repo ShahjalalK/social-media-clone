@@ -5,7 +5,7 @@ import { UserType, userDataState } from '@/recoil/userAtom';
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {useRouter} from 'next/router'
 import NotFound from '@/components/profilePage/notfound';
 
@@ -16,8 +16,8 @@ type Props = {
 
 const ProfileId = ({}: Props) => { 
   const [user, userLoading, error] = useAuthState(auth);
-  const setUserState = useSetRecoilState(userDataState)
-  const userDataValue = useRecoilValue(userDataState)
+  const [userDataValue, setUserState] = useRecoilState<UserType>(userDataState)
+ 
   const router = useRouter()
 
 
