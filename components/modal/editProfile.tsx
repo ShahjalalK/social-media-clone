@@ -13,6 +13,8 @@ import { Spinner } from 'flowbite-react'
 import { useAuthModalState } from '@/recoil/useAuthModalAtom'
 import { useUpdateProfile } from 'react-firebase-hooks/auth'
 
+
+
 type Props = {}
 
 const metadata = {
@@ -22,15 +24,18 @@ const metadata = {
 const EditProfile = (props: Props) => {
   const setModalState = useSetRecoilState(useAuthModalState)
   const [userState, setUserState] = useRecoilState(userDataState)
-  const [displayName, setDisplayName] = useState(userState.displayName);
-  const [photoURL, setPhotoURL] = useState(userState.photoURL);
   const [updateProfile, updating, error] = useUpdateProfile(auth);
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
-  
+ 
   const [bgFile, setBgFile] = useState<File>()
+  const [bgUrl, setBgUrl] = useState<string>("")
 
   const [prFile, setPrFile] = useState<File>()
+  const [prUrl, setPrUrl] = useState<string>("")
+
+
+
 
 
   
@@ -49,6 +54,7 @@ const EditProfile = (props: Props) => {
       ...prev,
       bg : selectedFile ? URL.createObjectURL(selectedFile?.[0]) : userState.bg
     }))
+    
   }
 
   const selectedProfileImage = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +68,7 @@ const EditProfile = (props: Props) => {
 
 
 
-  const bgUrlAdd = () => {
+  const bgUrlAdd = async () => {
     const storageRef = ref(storage, `images/${uuidv4()}`);
     const uploadTask = uploadBytesResumable(storageRef, bgFile as File);
     uploadTask.on('state_changed', 
@@ -86,17 +92,16 @@ const EditProfile = (props: Props) => {
   () => {
     
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      setUserState((prev) => ({
-        ...prev,
-        bg : downloadURL
-      }))
+      setBgUrl(downloadURL)
+         
+      
     });
   }
 );
 
   }
 
-    const photoURLAdd = () => {
+    const photoURLAdd = async () => {
       const storageRef = ref(storage, `images/${uuidv4()}`);
 
       const uploadTask = uploadBytesResumable(storageRef, prFile as File);
@@ -123,10 +128,10 @@ const EditProfile = (props: Props) => {
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      setUserState((prev) => ({
-        ...prev,
-        bg : downloadURL
-      }))
+      updateProfile({ photoURL : downloadURL }).then(() => {
+        setPrUrl(downloadURL)
+      }).catch(error => toast("Authentication Error"))
+      
     });
   }
 );
@@ -136,17 +141,37 @@ const EditProfile = (props: Props) => {
 
   const submitHandler = async(e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    
     
     setLoading(true)
-    bgUrlAdd()
-    photoURLAdd()
 
-    const success = await updateProfile({ displayName , photoURL });
-    if(success){
+    await bgUrlAdd()
+    await photoURLAdd()
 
+   
+
+    setLoading(false)
+
+  }
+
+  useEffect(() => {
+    updateProfile({ displayName : userState.displayName });
+    
       const userDocRef = doc(firestore, `users/${userState.uid}`)
   
-    await setDoc(userDocRef, userState).then(() => {
+     setDoc(userDocRef,{ 
+      uid : userState.uid,
+      displayName : userState.displayName,
+      email : userState.email,
+      photoURL : prUrl,
+      bg : bgUrl,
+      title : userState.title,
+      description : userState.description,
+      timestamp : userState.timestamp,
+      
+      }).then(() => {
+      
         router.push(`/u/${userState.uid}`)
         toast("Your profile updated")
         setModalState((prev) => ({
@@ -158,13 +183,9 @@ const EditProfile = (props: Props) => {
       toast("Authentication Error")
     })
 
-    }
+  
 
-    
-
-    setLoading(false)
-
-  }
+  }, [prUrl])
 
 
 
@@ -180,7 +201,7 @@ const EditProfile = (props: Props) => {
       <div className="w-full h-24 relative bg-gradient-to-r from-purple-500 to-pink-500">
         <label htmlFor='bg' className="absolute bottom-5 right-5 z-20 text-xl text-blue-600 cursor-pointer bg-white rounded-full p-1 hover:text-gray-600"><MdModeEditOutline /></label>
         <input accept='image/*' onChange={selectedBgImage} type="file" id='bg' className="hidden" />
-        {userState.bg && <Image src={userState.bg} width={350} height={120} alt="bg" className=" absolute top-0 left-0 w-full h-full z-10 "  />}
+        {userState.bg && <Image src={userState.bg} width={350} height={120} alt="bg" className=" absolute top-0 left-0 w-full h-full z-10 "  /> }
         
       </div>
 

@@ -14,6 +14,7 @@ type Props = {};
 
 const UserMenu = (props: Props) => {
     const userStateValue = useRecoilValue(userDataState)
+    
 
   const signOutHandler = async () => {
     await signOut(auth)

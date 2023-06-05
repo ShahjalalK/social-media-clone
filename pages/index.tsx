@@ -6,7 +6,7 @@ import PostCard from "@/components/profilePage/postCard";
 import TopPost from "@/components/profilePage/topPost";
 import { auth, firestore } from "@/firebase/firebase.config";
 import { UserType, userDataState } from "@/recoil/userAtom";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
@@ -23,7 +23,7 @@ type Props = {
 const Home = ({}: Props) => {
   const [user, userLoading, error] = useAuthState(auth);
   const setUserState = useSetRecoilState(userDataState)
-
+  
  useEffect(() => {
   
   if(user){
@@ -37,6 +37,8 @@ const Home = ({}: Props) => {
    
   }
  }, [user])
+
+
  
 
  

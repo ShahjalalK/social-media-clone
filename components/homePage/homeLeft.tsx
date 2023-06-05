@@ -27,7 +27,7 @@ const signOutHandler = async() =>{
         </div>  
         <div className="px-3">
         <Image src={userStateValue.photoURL} alt='p' width={70} height={70} className="rounded-full border mx-auto -mt-8 flex relative" />
-        <h1 className="font-medium capitalize hover:text-blue-700 hover:underline"><Link href="/u/[profileId]" as={`/u/${userStateValue.uid}`} > {userStateValue.displayName || userStateValue.email?.split("@")[0]} </Link></h1>
+        <h1 className="font-medium capitalize hover:text-blue-700 hover:underline"><Link href="/u/[profileId]" as={`/u/${userStateValue.uid as string}`} > {userStateValue.displayName || userStateValue.email?.split("@")[0]} </Link></h1>
         {userStateValue.title && <p className="text-sm my-3 text-gray-600">{userStateValue.title}</p>}
         <p className="flex items-center justify-center space-x-5 text-sm text-gray-500"><span>23 following</span> <span>23 followers</span></p>
        <div className="py-5">

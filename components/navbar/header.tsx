@@ -5,13 +5,24 @@ import AuthButton from './authButton'
 import UserMenu from './userMenu'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase.config'
-
+import { parseCookies } from 'nookies'
+import { signOut } from 'firebase/auth'
 
 
 type Props = {}
 
 const Header = (props: Props) => {
   const [user, loading, error] = useAuthState(auth);
+ 
+  const cookies = parseCookies()
+  const usersCookie = cookies.user ? JSON.parse(cookies.user) : ""
+
+  useEffect(() => {
+    if(!usersCookie){
+      signOut(auth)
+    }
+
+  }, [usersCookie])
  
   return (
     <header className="bg-blue-900 py-2">

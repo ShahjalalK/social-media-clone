@@ -43,13 +43,20 @@ const RightSide = ({}: Props) => {
   }
 
   const settingHandler = () => {
-    alert(344)
+    setModalState((prev) => ({
+      ...prev,
+     open : true,
+     view : "editProfile"
+    }))
   }
 
   return (
     <div className="bg-white rounded overflow-hidden border">
         <div className={`bg-gradient-to-r from-purple-500 to-pink-500 h-24 w-full bg-cover relative overflow-hidden `}>
+        
         {userStateValue.uid === userCookie.uid && <AiOutlineSetting className="text-2xl cursor-pointer text-white absolute top-5 right-5 z-30" onClick={settingHandler} />}
+
+
        {userStateValue.bg &&  <Image src={userStateValue.bg} width={350} height={100} alt='bg' className="absolute top-0 left-0 w-full h-full object-cover" />}
         </div>
         <div className="px-5 flex items-center justify-between relative">
