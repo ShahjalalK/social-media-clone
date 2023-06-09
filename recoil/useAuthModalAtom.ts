@@ -6,7 +6,7 @@ interface authModalState {
 
 const defaultState : authModalState = {
     open : false,
-    view : "login"
+    view : "signup"
 }
 
 export const useAuthModalState = atom<authModalState>({
