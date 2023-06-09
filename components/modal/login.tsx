@@ -1,76 +1,28 @@
-import { Button, Spinner } from 'flowbite-react'
-import React, { useEffect, useState } from 'react'
-import {HiOutlineMail} from 'react-icons/hi'
-import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai'
-import { useSetRecoilState } from 'recoil'
-import { useAuthModalState } from '@/recoil/useAuthModalAtom'
-import { useSignInWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '@/firebase/firebase.config'
-import GoogleButton from './googleButton'
-import Cookies from 'js-cookie'
+import { Button } from 'flowbite-react'
+import React from 'react'
 
 type Props = {}
 
 const Login = (props: Props) => {
-  
-  const setModalState = useSetRecoilState(useAuthModalState)
-    const [showPassword, setShowPassword] = useState<boolean>(false)
-    const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-
-  
-  const [
-    signInWithEmailAndPassword,
-    user,
-    loading,
-    error,
-  ] = useSignInWithEmailAndPassword(auth);
-
-  const submitHandler = async (e : React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    await signInWithEmailAndPassword(email, password).then((response : any) => {
-
-      Cookies.set("user", JSON.stringify({
-        email : response?.user.email,
-        displayName : response?.user.displayName,
-        uid : response?.user.uid
-      }))
-      
-      setEmail("")
-      setPassword("")
-    
-    setModalState((prev) => ({...prev, open : false}))
-    
-   }).catch((error) => console.log(error.message))
-  
-  }
-
-
-    
   return (
-    <form onSubmit={submitHandler} className="flex flex-col flex-grow space-y-4">
-      <GoogleButton />
-       <div className="relative flex-grow w-full">
-            <HiOutlineMail className="text-xl text-gray-500 absolute top-[50%] -translate-y-[50%] left-1" />
-        <input onChange={(e) => setEmail(e.target.value)} value={email} required type="email" placeholder='skgroup@email.com' className="flex-grow border p-1 w-full pl-8 rounded" />
-        </div>
-        <div className="relative flex-grow w-full">
-          <span className="text-xl text-gray-500 absolute top-[50%] -translate-y-[50%] left-1 cursor-pointer" onClick={() => setShowPassword(!showPassword)} > {showPassword ? <AiOutlineEyeInvisible/> : <AiOutlineEye/> } </span>
-           
-        <input onChange={(e) => setPassword(e.target.value)} value={password} required type={showPassword ? "text" : "password"} placeholder='Password' className="flex-grow border p-1 w-full pl-8 rounded" />
-        </div>
-
-       {error &&  <p className="text-red-600 text-sm">{error?.message}</p>}
-
-        <p className="text-sm">Reset your <span className=" text-blue-600 cursor-pointer" onClick={() => setModalState((prev) => ({...prev, view : "resetPassword" }))}>password</span></p>
-
-        
-
-        <Button type='submit'>{loading ? <Spinner /> : "Submit"}</Button>
-
-
-        <p className="text-sm text-center">Create your account <span  className=" text-blue-600 cursor-pointer" onClick={() => setModalState((prev) => ({...prev, view : "signup" }))}>sign up</span></p>
+    <div>
+      <h1 className="text-4xl text-center mb-5">Make the most of your professional life</h1>
+      <form className="flex flex-col space-y-3 max-w-sm bg-white p-5 mx-auto rounded-lg shadow">        
+      <div className="flex flex-col space-y-1">
+        <label htmlFor="email" className="text-sm">Email</label>
+        <input id='email' type="email" className="p-1 rounded-lg hover:bg-gray-100 cursor-pointer" required />
+      </div>
+      <div className="flex flex-col space-y-1">
+        <label htmlFor="password" className="text-sm">Password (6 or more characters)
+</label>
+        <input id='password' type="password" className="p-1 rounded-lg hover:bg-gray-100 cursor-pointer" required />
+      </div>
+      <div>
+        <p className="text-center text-xs">By clicking Agree & Join, you agree to the LinkedIn <span className="text-blue-700 font-medium">User Agreement, Privacy Policy,</span> and <span className="text-blue-700 font-medium">Cookie Policy.</span></p>
+      </div>
+      <button className="w-full rounded-full py-2 text-lg bg-[#0072b1] text-white hover:bg-blue-800 transition-colors duration-100 focus:ring-4 focus:ring-blue-300 font-medium px-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agree & Join</button>
     </form>
+    </div>
   )
 }
 

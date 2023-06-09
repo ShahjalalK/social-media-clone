@@ -1,78 +1,24 @@
-import HomeLeft from "@/components/homePage/homeLeft";
-import HomeRight from "@/components/homePage/homeRight";
-import MySelf from "@/components/homePage/mySelf";
-import PostAdd from "@/components/profilePage/postAdd";
-import PostCard from "@/components/profilePage/postCard";
-import TopPost from "@/components/profilePage/topPost";
-import { auth, firestore } from "@/firebase/firebase.config";
-import { UserType, userDataState } from "@/recoil/userAtom";
-import { collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
-import { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useSetRecoilState } from "recoil";
+import HomeCenterSide from '@/components/homePageComponents/homecenterside'
+import HomeLeftSide from '@/components/homePageComponents/homeleftside'
 
+import HomeRightSide from '@/components/homePageComponents/homerightside'
+import MetaSeo from '@/metaSeo/metaSeo'
+import React from 'react'
 
+type Props = {}
 
-
-
-type Props = {
- 
-  
-};
-
-const Home = ({}: Props) => {
-  const [user, userLoading, error] = useAuthState(auth);
-  const setUserState = useSetRecoilState(userDataState)
-  
- useEffect(() => {
-  
-  if(user){
-    
-    const getUserDocRef = doc(firestore, `users/${user?.uid}`)
-    getDoc(getUserDocRef).then((res) => {
-      
-      setUserState(res.data() as UserType)
-      
-    })
-   
-  }
- }, [user])
-
-
- 
-
- 
+const Home = (props: Props) => {
   return (
-    <div className="max-w-5xl py-5 mx-auto grid grid-cols-9 items-start gap-5">
-      <div className="col-span-2 flex flex-col space-y-3">
-        {user &&   <HomeLeft  />}
-       
-
-        <MySelf />
-      </div>
-      <div className=" col-span-4 flex flex-col flex-grow space-y-5">        
-      {user  && <PostAdd />}
-        <TopPost />
-        <PostCard  />
-
-        
-      </div>
-      <div className="col-span-3">
-        <HomeRight  />
-      </div>
+   <>
+   <MetaSeo title="Feed | Linkedin" />
+    <div className="padding-section container grid grid-cols-1 lg:grid-cols-4 items-start gap-5">
+      <HomeLeftSide />
+      <HomeCenterSide />
+      <HomeRightSide />
+     
     </div>
-  );
-};
+   </>
+  )
+}
 
-export default Home;
-
-
-
-
-
-
-
-
-
-
-
+export default Home

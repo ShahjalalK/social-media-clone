@@ -2,12 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  @apply bg-[#DAE0E6]
+:root{
+  @apply transition-all duration-200 ease-in-out  
 }
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  @apply text-[#212121] bg-[#F3F2EF] h-screen
+}
+
 
 @layer components{
   .container{
-    @apply max-w-7xl mx-auto
+    @apply  max-w-6xl mx-1 lg:mx-auto
   }
+  .padding-section{
+    @apply pt-10 lg:pt-16 pb-10
+  }
+}
+
+
+.featuredSlider .swiper-button-next {
+  background-image: url(/prev.svg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  right: 0 !important;
+  background-position: center;
+}
+
+.featuredSlider .swiper-button-prev {
+  background-image: url(/next.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  left: 0;
+  background-position: center;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+  display: none !important;
+  content: "";
 }

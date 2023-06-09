@@ -1,51 +1,25 @@
-import { useAuthModalState } from '@/recoil/useAuthModalAtom'
-import { Modal } from 'flowbite-react'
 import React from 'react'
-import {useRecoilState} from 'recoil'
-import Signup from './signup'
-import Login from './login'
-import ResetPassword from './resetPassword'
-import EditProfile from './editProfile'
-import Post from './post'
+import { Modal } from 'flowbite-react';
+import { useRecoilState } from 'recoil';
+import { useAuthModalState } from '@/recoil/useAuthModalAtom';
+import Login from './login';
+import Image from 'next/image'
+
 
 type Props = {}
 
 const AuthModal = (props: Props) => {
     const [modal, setModal] = useRecoilState(useAuthModalState)
-    const modalHandler = () => {
-        setModal((prev) => ({...prev, open : false}))
-    }
+  
   return (
-    <>
+    <div className="container py-5 flex flex-col space-y-10">
+      <div>
+        <Image src="/LinkedIn_Logo.svg" alt='l' width={250} height={120} className="w-32"  />
+      </div>
 
-<Modal
-show={modal.open}
-  
-  onClose={modalHandler}
-  size={modal.view ==="post" || modal.view ==="editProfile" ? "lg" : "md"}
->
-  <Modal.Header>
-  {modal.view ==="signup" &&  "Sign Up"}
-   {modal.view ==="login" &&  "Login"}
-   {modal.view ==="resetPassword" &&  "Reset Password"}
-   {modal.view ==="editProfile" &&   "Edit intro"}
-   {modal.view ==="post" &&  "Post"}
-  </Modal.Header>
-  <Modal.Body>
-   {modal.view ==="signup" &&  <Signup />}
-   {modal.view ==="login" &&  <Login />}
-   {modal.view ==="resetPassword" &&  <ResetPassword />}
-   {modal.view ==="editProfile" &&   <EditProfile />}
-   {modal.view ==="post" &&  <Post />}
-    
-    
-   
-    
-  </Modal.Body>
-  
-</Modal>
-    
-    </>
+      {modal.view === "login" && <Login />}
+    </div>
+
   )
 }
 
