@@ -8,6 +8,9 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import Image from 'next/image'
 import { Dropdown } from 'flowbite-react'
+import { signOut } from 'firebase/auth'
+import { auth } from '@/firebase/firebase.config'
+import Cookies from 'js-cookie'
 
 type Props = {}
 
@@ -58,19 +61,20 @@ arrowIcon={false}
 
 
 >
-  <Dropdown.Header className="flex flex-col space-y-3">
-    <div className="flex items-center space-x-2">
+  <div className=" max-w-xs p-3 flex flex-col space-y-5 overflow-hidden">
+  <div className="flex flex-col space-y-3">
+    <div className="flex items-center">
     <Image src="/user.png" alt="u" width={35} height={35} className="rounded-full w-12 h-12 border object-cover" />
-    <div>
+    <div className="flex flex-col space-y-0 px-2 overflow-hidden">
         <h1 className="capitalize font-bold">Shahjalal Khan</h1>
-        <p className="line-clamp-1">Lorem ipsum dolor sit, amet consectetur </p>
+        <p className="line-clamp-2">laborum corporis? Delectus eius dolore voluptates consectetur voluptate praesentium alias minus consequatur excepturi, doloribus, eligendi, soluta quae! Optio illum inventore incidunt earum laudantium amet voluptatum maiores fuga blanditiis, quo asperiores vero! </p>
     </div>
     </div>
     <button className="w-full rounded-full py-1 border text-blue-600 hover:text-blue-800 capitalize border-blue-600 hover:border-blue-800 focus:border-2 font-bold transition-colors duration-300 ease-in-out">view profile</button>
-  </Dropdown.Header>
+  </div>
 
 
-  <Dropdown.Header >
+  <div >
     <div className="flex flex-col space-y-3 items-start justify-start">
     <h2 className="text-lg font-medium">Account</h2>
     <div className="flex flex-col space-y-2">
@@ -79,9 +83,9 @@ arrowIcon={false}
         <p className="cursor-pointer text-gray-600 hover:underline">Language</p>
     </div>
     </div>
-  </Dropdown.Header>
+  </div>
   
-  <Dropdown.Header >
+  <div >
     <div className="flex flex-col space-y-3 items-start justify-start">
     <h2 className="text-lg font-medium">Manage</h2>
     <div className="flex flex-col space-y-2">
@@ -93,11 +97,15 @@ arrowIcon={false}
  
 
     </div>
-  </Dropdown.Header>
-  <Dropdown.Item>
-    Sign out
-    
-  </Dropdown.Item>
+  </div>
+  <div className="flex justify-start items-center">
+    <span onClick={() => {
+       signOut(auth)
+       Cookies.remove("user")
+       router.push("/")
+    }} className="cursor-pointer rounded px-3 hover:bg-gray-200 p-1">Sign out </span>   
+  </div>
+  </div>
 </Dropdown>
     </div>
   )
