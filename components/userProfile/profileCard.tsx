@@ -51,7 +51,8 @@ const ProfileCard = (props: Props) => {
   return (
     <div className="bg-white rounded-lg shadow-md border border-gray-300">
         <div className="bg-gray-300 rounded-lg overflow-hidden w-full h-52 relative">
-              <div onClick={BgHandler} className="bg-white/95 rounded-full w-8 h-8 absolute top-3 right-3 flex items-center justify-center text-blue-700 cursor-pointer text-xl hover:text-gray-600"><MdOutlineModeEdit /></div>
+          {userCookie.token == userValue.token && <div onClick={BgHandler} className="bg-white/95 rounded-full w-8 h-8 absolute top-3 right-3 flex items-center justify-center text-blue-700 cursor-pointer text-xl hover:text-gray-600"><MdOutlineModeEdit /></div>}
+              
             {userValue.bgURL && <Image src={userValue.bgURL} width={750} height={300} alt="bg" className="w-full h-full object-fill z-10" />}
 
         </div>

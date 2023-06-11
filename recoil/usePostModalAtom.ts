@@ -2,12 +2,12 @@ import { atom } from "recoil"
 
 interface usepostModelType {
     open : boolean,
-    view : "post"
+    view : "content" | "media"
 }
 
 const defaultModal : usepostModelType ={
     open : false,
-    view : "post"
+    view : "content"
 }
 
 export const usePostModalState = atom<usepostModelType>({

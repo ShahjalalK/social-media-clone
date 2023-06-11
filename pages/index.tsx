@@ -3,22 +3,35 @@ import HomeCenterSide from '@/components/homePageComponents/homecenterside'
 import HomeLeftSide from '@/components/homePageComponents/homeleftside'
 
 import HomeRightSide from '@/components/homePageComponents/homerightside'
-import { auth } from '@/firebase/firebase.config'
+import { auth, firestore } from '@/firebase/firebase.config'
 import FirebaseFireStoreApi from '@/firebaseApi/firebaseFirestoreApi'
+import FirebasePostApi from '@/firebaseApi/firebasePostApi'
 import MetaSeo from '@/metaSeo/metaSeo'
+import { AllPostData } from '@/recoil/postAtom'
+import { collection, onSnapshot } from 'firebase/firestore'
 import React, { useMemo } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useRecoilValue } from 'recoil'
 
 type Props = {}
 
 const Home = (props: Props) => {
   const [user, loading, error] = useAuthState(auth);
   const {userQuery} = FirebaseFireStoreApi()
+  const {getAllPost} = FirebasePostApi()
+
+  const allPostValue = useRecoilValue(AllPostData)
+ 
+
+  
  
 
   useMemo(() => {
     userQuery()
+    getAllPost()   
   }, [])
+
+ 
 
 
   return (
