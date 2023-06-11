@@ -34,55 +34,41 @@ const BgInfo = (props: Props) => {
   
 
   const submitHandler = async () => {
-    setLoading(true)
-    const desertRef = ref(storage, `images/${userValue.uid}`);
-   await deleteObject(desertRef).then(() => {
-      console.log("File deleted successfully")
-    }).catch((error) => {
-      console.log(error)
-    });
-    const storageRef = ref(storage, `images/${uuidv4()}`);
-
-  const uploadTask = uploadBytesResumable(storageRef, currentImg as File);
-
-  uploadTask.on('state_changed', 
-  (snapshot) => {
-    // Observe state change events such as progress, pause, and resume
-    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    console.log('Upload is ' + progress + '% done');
-    switch (snapshot.state) {
-      case 'paused':
-        console.log('Upload is paused');
-        break;
-      case 'running':
-        console.log('Upload is running');
-        break;
-    }
-  }, 
-  (error) => {
-    // Handle unsuccessful uploads
-  }, 
-  () => {
-    // Handle successful uploads on complete
-    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      const userDocRef = doc(firestore, `users/${userValue.uid}`)
-      updateDoc(userDocRef, {
-        bgURL : downloadURL
-      }).then(() => {
-        toast("Your profile has been updated")
-        setEditProfile((prev) => ({
-          ...prev,
-          open : false
-        }))
-      })
-    });
-  }
- 
-);
-setLoading(false)
+    setLoading(true)  
    
+
+      const storageRef = ref(storage, `images/${uuidv4()}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, currentImg as File);
+
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+       
+      }, 
+      (error) => {
+       
+      }, 
+      () => {
+        
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const userDocRef = doc(firestore, `users/${userValue.uid}`)
+          updateDoc(userDocRef, {
+            bgURL : downloadURL
+          }).then(() => {
+            toast("Your profile has been updated")
+            setEditProfile((prev) => ({
+              ...prev,
+              open : false
+            }))
+          })
+        });
+      }
+     
+    );   
   }
 
   return (

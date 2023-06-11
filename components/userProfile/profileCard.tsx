@@ -31,6 +31,22 @@ const ProfileCard = (props: Props) => {
       }))
     }
 
+    const ProfilePhotoHandaler = () => {
+      setProfileState((prev) => ({
+        ...prev,
+        open : true,
+        view : "profileImage"
+      }))
+    }
+
+    const ProfileInfoHandaler = () => {
+      setProfileState((prev) => ({
+        ...prev,
+        open : true,
+        view : "profileInfo"
+      }))
+    }
+
     
   return (
     <div className="bg-white rounded-lg shadow-md border border-gray-300">
@@ -40,12 +56,12 @@ const ProfileCard = (props: Props) => {
 
         </div>
         <div className="flex items-center justify-between px-5">
-            <Image src={userValue.photoURL} width={300} height={300} alt='u' className="w-32 h-32 rounded-full border -mt-20 z-20 cursor-pointer" />
+            <Image onClick={ProfilePhotoHandaler} src={userValue.photoURL} width={300} height={300} alt='u' className="w-32 h-32 rounded-full border -mt-20 z-20 cursor-pointer" />
            
             {userCookie.token == userValue.token ? 
             
             (
-             < div className="text-2xl w-10 h-10 flex items-center justify-center hover:bg-gray-200 rounded-full cursor-pointer"><VscEdit /></div>
+             < div className="text-2xl w-10 h-10 flex items-center justify-center hover:bg-gray-200 rounded-full cursor-pointer" onClick={ProfileInfoHandaler}><VscEdit /></div>
             ):
             (
               <div>
@@ -69,7 +85,7 @@ const ProfileCard = (props: Props) => {
             {userValue.location && <p className="flex space-x-2 items-center"><span>{userValue.location}</span> <span className="text-blue-700 cursor-pointer">Contact info</span></p>}
 
             {userValue.webURL && <div className="flex">
-            <Link href={userValue.webURL} className=" flex items-center space-x-1 text-blue-800 hover:underline "><span>LET’S WORK TOGETHER!</span> <HiOutlineArrowTopRightOnSquare /> </Link>
+            <Link href={userValue.webURL} target="_blank" className=" flex items-center space-x-1 text-blue-800 hover:underline "><span>LET’S WORK TOGETHER!</span> <HiOutlineArrowTopRightOnSquare /> </Link>
             </div>}
             
             <p className="flex items-center space-x-5"><span className="text-sm text-gray-500">69,032 followers </span> <span className="text-blue-700 text-sm font-medium hover:underline">500+ connections</span></p>
