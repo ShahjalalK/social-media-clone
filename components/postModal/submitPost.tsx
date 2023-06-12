@@ -32,7 +32,7 @@ const SubmitPost = (props: Props) => {
           photoURL : userValue.photoURL,
           displayName: userValue.displayName || userValue.email,
           uid: userValue.uid,      
-          Timestamp: serverTimestamp(),
+          timestamp: serverTimestamp(),
         })
         if(res){
             resetPostValue()

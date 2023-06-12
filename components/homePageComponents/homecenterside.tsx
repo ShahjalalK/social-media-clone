@@ -14,7 +14,7 @@ const HomeCenterSide = (props: Props) => {
     <div className="lg:col-span-2 flex flex-col space-y-5 ">
       <PostAdd />
       {allPostValue.map((item) => (
-        <PostCard post={item} />
+        <PostCard key={item.uid} post={item} />
       ))}
         
      

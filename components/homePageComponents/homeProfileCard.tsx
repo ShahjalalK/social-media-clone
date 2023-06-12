@@ -22,16 +22,11 @@ const HomeProfileCard = (props: Props) => {
             <p className="line-clamp-2 text-sm">{userValue.title || "Setup your title..."}</p>
         </div>
         <hr />
-        <div className="px-3 py-2 flex items-center  justify-between">
+        <div className="p-3 flex items-center text-sm text-gray-400  justify-between">
           <span>1,406 followers</span>
           <span>107 following</span>
         </div>
-        <div className="flex items-center justify-center py-5">
-          <button className="px-5 py-1 bg-gray-200 rounded-lg" onClick={() => {
-            signOut(auth)
-            Cookies.remove("user")
-          }}>Sign Out</button>
-        </div>
+        
        
     </div>
   )

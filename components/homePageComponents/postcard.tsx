@@ -5,7 +5,9 @@ import { Avatar } from 'flowbite-react'
 import LikeComments from './likecomments'
 import { useRecoilValue } from 'recoil'
 import { AllPostData, postType } from '@/recoil/postAtom'
+import moment from 'moment';
 import Link from 'next/link'
+import Moment from 'react-moment'
 
 type Props = {
   post : postType
@@ -21,7 +23,7 @@ const PostCard = ({post}: Props) => {
             <div>
                 <h4 className="font-medium text-sm hover:text-blue-600 hover:underline">{post.displayName.split("@")[0]}</h4>
                 <p className="line-clamp-1 text-sm text-gray-500">{post.title}</p>
-                <p className="text-sm text-gray-500 flex items-center space-x-1"><span>1h .</span> <BiWorld /></p>
+                <p className="text-sm text-gray-500 flex items-center space-x-1"><span> <Moment fromNow>{post.timestamp?.toDate()}</Moment> .</span> <BiWorld /></p>
             </div>
         </Link>
         <div>

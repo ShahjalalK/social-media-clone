@@ -1,5 +1,5 @@
 
-import { Timestamp, serverTimestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 import { atom } from "recoil";
 
 export interface postType {
@@ -10,6 +10,7 @@ export interface postType {
     email : string;
     uid : string;
     media : string;
+    timestamp : Timestamp
 }
 const defaultPostData : postType = {
     content : "",
@@ -19,6 +20,7 @@ const defaultPostData : postType = {
     email :" ",
     uid : "",
     media : "",
+    timestamp : Timestamp as any
    
 }
 

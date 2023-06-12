@@ -20,10 +20,6 @@ const Home = (props: Props) => {
   const {userQuery} = FirebaseFireStoreApi()
   const {getAllPost} = FirebasePostApi()
 
-  const allPostValue = useRecoilValue(AllPostData)
- 
-
-  
  
 
   useMemo(() => {

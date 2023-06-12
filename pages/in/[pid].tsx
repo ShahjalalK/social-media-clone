@@ -33,7 +33,7 @@ const ProfileId = (props: Props) => {
     <section className="padding-section container grid grid-cols-1 lg:grid-cols-3 gap-5">
         <MetaSeo title={`${userValue.displayName || userValue.email.split("@")[0]} | Linkedin`} />
         {!user?.emailVerified && (
-       <div className=" col-span-1 lg:col-span-4">
+       <div className=" col-span-1 lg:col-span-4">        
        <AlartWithValidation />
      </div>
       )
