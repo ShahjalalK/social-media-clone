@@ -1,9 +1,9 @@
 import AlartWithValidation from '@/components/alartWithValidation'
 import LeftSide from '@/components/userProfile/leftSide'
 import RightSide from '@/components/userProfile/rightSide'
-import { auth } from '@/firebase/firebase.config'
+import { auth, firestore } from '@/firebase/firebase.config'
 import FirebaseFireStoreApi from '@/firebaseApi/firebaseFirestoreApi'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
@@ -21,11 +21,11 @@ const ProfileId = (props: Props) => {
 
   const pid = router.query.pid as string
 
-  useMemo(() => {
+  useEffect(() => {
 
     userPidQuery(pid as string)
     
-  }, [])
+  }, [firestore])
 
 
 

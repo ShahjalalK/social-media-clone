@@ -30,18 +30,21 @@ const SubmitPost = (props: Props) => {
           title : userValue.title,
           media: postValue.media,
           photoURL : userValue.photoURL,
-          displayName: userValue.displayName || userValue.email,
+          displayName: userValue.displayName,
+          email : userValue.email,
           uid: userValue.uid,      
           timestamp: serverTimestamp(),
+          token : userValue.token
         })
         if(res){
             resetPostValue()
-            setPostModal((prev) => ({
-                ...prev,
-                open : false
-            }))
+           
             toast("Post added successfully")
         }
+        setPostModal((prev) => ({
+          ...prev,
+          open : false
+      }))
         }
         
     } catch (error) {

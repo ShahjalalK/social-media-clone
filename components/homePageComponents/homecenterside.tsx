@@ -16,10 +16,7 @@ const HomeCenterSide = (props: Props) => {
       {allPostValue.map((item) => (
         <PostCard key={item.uid} post={item} />
       ))}
-        
-     
-      
-      
+            
     </div>
   );
 };
