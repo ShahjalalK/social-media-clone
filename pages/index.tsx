@@ -25,9 +25,14 @@ const Home = (props: Props) => {
 
   useEffect(() => {
     getAllPost() 
+    
+  }, [firestore])
+
+  useEffect(() => {
     userQuery()  
     
   }, [firestore])
+
 
  
 

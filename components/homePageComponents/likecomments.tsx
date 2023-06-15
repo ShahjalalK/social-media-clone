@@ -15,17 +15,23 @@ import { firestore } from "@/firebase/firebase.config";
 type Props = {
   postId : string;
   comments : any
-  uid : string
+  uid : string,
+  likes : any
 };
 
-const LikeComments = ({uid, comments, postId}: Props) => {
-  const {commentPost} = FirebasePostApi()  
+const LikeComments = ({likes, uid, comments, postId}: Props) => {
+  const {commentPost, likePost} = FirebasePostApi()  
   const userValue = useRecoilValue(UserState)
 
  
     const [showComment, setShowComment] = useState<boolean>(false)
     
- 
+
+    const [hashLiked, setHashLiked] = useState<boolean>(false)
+    
+  console.log("Liked", hashLiked)
+  console.log("likeId", likes.map((item : any) => item.id))
+  
 
     const [comment, setComment] = useState<string>("")
   
@@ -38,8 +44,13 @@ const LikeComments = ({uid, comments, postId}: Props) => {
     await commentPost(commentToSend, postId )
   }
 
-  const likeHandler = () => {
-    alert(postId)
+  useEffect(() => {
+    setHashLiked(likes.some((like : any) => like.data().uid === userValue.uid))
+  }, [likes])
+
+  const likeHandler = async () => {
+    await likePost(postId, hashLiked)
+    setShowComment(true)
   }
    
 
@@ -55,7 +66,7 @@ const LikeComments = ({uid, comments, postId}: Props) => {
         />
 
       <div onClick={likeHandler} className="cursor-pointer px-2 py-3 hover:bg-gray-200 text-gray-600 rounded flex items-center space-x-1">
-          <AiOutlineHeart className="text-2xl" />
+         {hashLiked ? <AiFillHeart className="text-2xl text-[#FF3040]" /> : <AiOutlineHeart className="text-2xl" />} 
           <p>Like</p>
         </div>
 

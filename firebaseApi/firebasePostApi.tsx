@@ -12,7 +12,6 @@ const FirebasePostApi = () => {
   
   const setAllPost = useSetRecoilState<postType[]>(AllPostData)
   const userValue = useRecoilValue(UserState)
-  const [likes, setLikes] = useRecoilState<likeType[]>(AllLikeData)
  
  
  
@@ -46,13 +45,34 @@ const FirebasePostApi = () => {
      }
    }
 
+   const likePost = async ( postId : string, hashLiked : boolean) => {
+     const likeRef = doc(firestore, "posts", postId, "likes", userValue.uid)
+     if(hashLiked){
+      await deleteDoc(likeRef)
+
+     }else{
+      await setDoc(likeRef, {
+        displayName : userValue.displayName,
+        photoURL : userValue.photoURL,
+        uid : userValue.uid,
+        timeStamp : serverTimestamp(),
+        title : userValue.title,
+        email : userValue.email,
+       })
+
+     }
+    
+
+   }
+
 
 
    
    
   return {
     getAllPost,
-    commentPost
+    commentPost,
+    likePost
   }
 }
 

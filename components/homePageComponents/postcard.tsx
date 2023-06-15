@@ -18,12 +18,19 @@ type Props = {
 
 const PostCard = ({post}: Props) => {
 const [comments, setComments] = useState([])
+const [likes, setLikes] = useState([])
 
 useEffect(() => {
   onSnapshot(query(collection(firestore, "posts", post.postId, "comments"), orderBy("timeStamp", "desc") ), (snapshot) => {
     setComments(snapshot.docs as any)
   } )
-}, [firestore])
+}, [firestore, post.postId])
+
+useEffect(() => {
+  onSnapshot(query(collection(firestore, "posts", post.postId, "likes"), orderBy("timeStamp", "desc")), (snapshot) => {
+    setLikes(snapshot.docs as any)
+  })
+}, [firestore, post.postId])
   
   return (
     <div className="bg-white rounded-lg shadow border-gray-300 py-3 px-5 flex flex-col space-y-2">
@@ -40,28 +47,26 @@ useEffect(() => {
            {post.media && <Image src={post.media} width={350} height={350} alt='bg' className='w-full h-auto mt-3' />} 
         </div>
         <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-1">
-        <Avatar.Group>
-        <Avatar
-               img="/user.png"
-               rounded
-               stacked
-               size="xs"
-             />
+          {likes.length > 0 ? 
+          (
+            <div className="flex items-center space-x-1">
+            
+
+            <div className="flex -space-x-4">
+   {likes.slice(0, 5).map((item : any) => (
+    <Image className="w-7 h-7 border bg-white rounded-full dark:border-gray-800" src={item.data().photoURL} alt="p" width={50} height={50} /> 
+   ) )}
    
-    
-    
-    <Avatar.Counter
-    className="text-xs"
-    style={{width: "30px", height : "30px"}}
-      href="#"
-      total={6}
-     
-      
-    />
-  </Avatar.Group>
-  <p className="text-sm text-gray-500 hover:text-blue-600 hover:underline cursor-pointer">Joshua Camarillo and 26 others</p>
-        </div>
+</div>
+
+      {likes.length > 0 && <p className="text-gray-500 hover:text-blue-600 hover:underline cursor-pointer text-xs">Liked by  {likes.slice(0, 1).map((item : any) => (item.data().displayName || item.data().email.split("@")[0]))} and {likes.length} others</p>}
+            </div>
+          ) 
+          : 
+          <p>0 likes</p> 
+          
+        }
+       
   <div className="flex items-center space-x-2 text-sm text-gray-500">
     <p className='cursor-pointer hover:text-blue-600 hover:underline'>{comments.length} comments</p>
     <span>.</span>
@@ -70,7 +75,7 @@ useEffect(() => {
         </div>
         <hr />
 
-        <LikeComments uid={post.uid} comments={comments} postId={post.postId} />
+        <LikeComments likes={likes} uid={post.uid} comments={comments} postId={post.postId} />
 
        
     </div>
