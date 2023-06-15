@@ -34,7 +34,6 @@ const SubmitPost = (props: Props) => {
           email : userValue.email,
           uid: userValue.uid,      
           timestamp: serverTimestamp(),
-          token : userValue.token
         })
         if(res){
             resetPostValue()

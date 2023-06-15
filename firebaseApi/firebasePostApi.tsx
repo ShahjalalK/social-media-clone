@@ -1,7 +1,7 @@
 import { firestore } from '@/firebase/firebase.config'
 import { AllLikeData, AllPostData, likeType, postType } from '@/recoil/postAtom'
 import { UserState } from '@/recoil/userAuthAtom'
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from 'firebase/firestore'
 import React from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import safeJsonStringify from 'safe-json-stringify'
@@ -14,7 +14,6 @@ const FirebasePostApi = () => {
   const userValue = useRecoilValue(UserState)
   const [likes, setLikes] = useRecoilState<likeType[]>(AllLikeData)
  
-  const likeRef = collection(firestore, "likes")
  
  
    const getAllPost = () => {
@@ -28,17 +27,18 @@ const FirebasePostApi = () => {
     })
    }
 
-   const LikePost = ( postId : string) => {
+   const commentPost = async (comment : string, postId : string) => {
      try {
-      const docToLike = doc(likeRef, `${postId}_${userValue.uid}`)
-     setDoc(docToLike, {
-      photoURL : userValue.displayName,
-      uid : userValue.uid,
-      title : userValue.title,
-      postId,
-      email : userValue.email,
-      displayName : userValue.displayName,
-     })
+      const postToRef = collection(firestore, "posts", postId, "comments" )
+     await addDoc(postToRef, {
+              comment,
+              displayName : userValue.displayName,
+              photoURL : userValue.photoURL,
+              uid : userValue.uid,
+              timeStamp : serverTimestamp(),
+              title : userValue.title,
+              email : userValue.email,
+      })
       
      } catch (error : any) {
       console.log(error.message)
@@ -46,29 +46,13 @@ const FirebasePostApi = () => {
      }
    }
 
-   const getLikeByUser = () => {
-    try {
-      // let likeQuery = query(likeRef)
-      onSnapshot(likeRef, (res) => {
-        setLikes(
-          res.docs.map((item) => {
-            return {...item.data() as likeType}
-          })
-        )
-       
-      })
-    } catch (error : any) {
-      console.log(error.message)
-    }
 
-   }
 
    
    
   return {
     getAllPost,
-    LikePost,
-    getLikeByUser
+    commentPost
   }
 }
 

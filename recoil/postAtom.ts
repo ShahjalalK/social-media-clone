@@ -62,3 +62,9 @@ export const AllLikeData = atom<likeType[]>({
     key : "AllLikeData",
     default : []
 })
+
+export const CommentsState = atom<any[]>({
+    key : "CommentsState",
+    default : []
+})
+

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import {BiWorld} from 'react-icons/bi'
 import { Avatar } from 'flowbite-react'
@@ -9,14 +9,21 @@ import Link from 'next/link'
 import Moment from 'react-moment'
 import FirebasePostApi from '@/firebaseApi/firebasePostApi'
 import { UserState } from '@/recoil/userAuthAtom'
+import { firestore } from '@/firebase/firebase.config'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 
 type Props = {
   post : postType
 }
 
 const PostCard = ({post}: Props) => {
-  const userValue = useRecoilValue(UserState)
-  const likeValue = useRecoilValue(AllLikeData)
+const [comments, setComments] = useState([])
+
+useEffect(() => {
+  onSnapshot(query(collection(firestore, "posts", post.postId, "comments"), orderBy("timeStamp", "desc") ), (snapshot) => {
+    setComments(snapshot.docs as any)
+  } )
+}, [firestore])
   
   return (
     <div className="bg-white rounded-lg shadow border-gray-300 py-3 px-5 flex flex-col space-y-2">
@@ -33,16 +40,14 @@ const PostCard = ({post}: Props) => {
            {post.media && <Image src={post.media} width={350} height={350} alt='bg' className='w-full h-auto mt-3' />} 
         </div>
         <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-1">
         <Avatar.Group>
-          {likeValue.map((item) => (
-               <Avatar
-               img={item.photoURL}
+        <Avatar
+               img="/user.png"
                rounded
                stacked
                size="xs"
              />
-            
-          ))}
    
     
     
@@ -50,19 +55,24 @@ const PostCard = ({post}: Props) => {
     className="text-xs"
     style={{width: "30px", height : "30px"}}
       href="#"
-      total={likeValue.length}
+      total={6}
      
       
     />
   </Avatar.Group>
+  <p className="text-sm text-gray-500 hover:text-blue-600 hover:underline cursor-pointer">Joshua Camarillo and 26 others</p>
+        </div>
   <div className="flex items-center space-x-2 text-sm text-gray-500">
-    <p className='cursor-pointer hover:text-blue-600 hover:underline'>43 comments</p>
+    <p className='cursor-pointer hover:text-blue-600 hover:underline'>{comments.length} comments</p>
     <span>.</span>
     <p className='cursor-pointer hover:text-blue-600 hover:underline'>4 reposts</p>
   </div>  
         </div>
         <hr />
-       <LikeComments postId={post.postId} token={post.token}   />
+
+        <LikeComments uid={post.uid} comments={comments} postId={post.postId} />
+
+       
     </div>
 
   )

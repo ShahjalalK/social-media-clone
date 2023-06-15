@@ -6,7 +6,7 @@ import { MdOutlineRepeat } from "react-icons/md";
 import Comment from "./comment";
 import FirebasePostApi from "@/firebaseApi/firebasePostApi";
 import { useRecoilValue } from "recoil";
-import { AllLikeData, commentType } from "@/recoil/postAtom";
+import { AllLikeData, CommentsState, commentType } from "@/recoil/postAtom";
 import { UserState } from "@/recoil/userAuthAtom";
 import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { firestore } from "@/firebase/firebase.config";
@@ -14,48 +14,33 @@ import { firestore } from "@/firebase/firebase.config";
 
 type Props = {
   postId : string;
-  token : string
+  comments : any
+  uid : string
 };
 
-const LikeComments = ({postId, token}: Props) => {
-  const {LikePost} = FirebasePostApi()  
+const LikeComments = ({uid, comments, postId}: Props) => {
+  const {commentPost} = FirebasePostApi()  
   const userValue = useRecoilValue(UserState)
+
  
     const [showComment, setShowComment] = useState<boolean>(false)
     
-    const likeHandler = () => {
-      LikePost(postId)
-    }
+ 
 
     const [comment, setComment] = useState<string>("")
-    const [comments, setComments] = useState([])
-    console.log("comments", comments)
+  
+  
 
-    useEffect(() => {
-      onSnapshot(query(collection(firestore, "posts", postId, "comments"), orderBy("timeStamp", "desc") ), (snapshot) => {
-        setComments(snapshot.docs as any)
-      } )
-
-    }, [firestore])
-
-   const sendComment = async (e : React.FormEvent<HTMLFormElement>) => {
+  const commentHandler = async (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const commentToSend = comment
-    setComment('')
+    setComment("")
+    await commentPost(commentToSend, postId )
+  }
 
-    await addDoc(collection(firestore, "posts", postId, "comments"), {
-        comment : commentToSend,
-        displayName : userValue.displayName,
-        photoURL : userValue.photoURL,
-        uid : userValue.uid,
-        timeStamp : serverTimestamp(),
-        title : userValue.title,
-        email : userValue.email,
-        token,
-        myToken : userValue.token
-    })
-   }
-
+  const likeHandler = () => {
+    alert(postId)
+  }
    
 
   return (
@@ -89,7 +74,7 @@ const LikeComments = ({postId, token}: Props) => {
       <div className={`${showComment ? "flex" : "hidden"} flex-col space-y-5`}>
         <div className="flex flex-grow items-center space-x-2">
           <Image src={userValue.photoURL} alt="u" width={50} height={50} className=" rounded-full w-12 h-12 object-cover border" />
-          <form onSubmit={sendComment} className=" relative w-full">
+          <form onSubmit={commentHandler} className=" relative w-full">
           <input
           value={comment}
           onChange={(e) => setComment(e.target.value)}
@@ -100,14 +85,12 @@ const LikeComments = ({postId, token}: Props) => {
           <button type="submit" className={`${!comment.trim( ) ? "hidden" : " inline-flex"} rounded-full px-5 py-2 bg-blue-600 hover:bg-blue-800 text-white font-medium absolute top-[50%] right-1 -translate-y-[50%] text-sm`} disabled={!comment.trim( )}>Post</button>
           </form>
         </div>
-        {comments.length > 0 && <p className="text-sm text-gray-600 flex items-center space-x-0 cursor-pointer"><span>Most recent</span> <FaCaretDown className="text-xl" /></p>}
-        {comments.length > 0 && (
-           <div className="flex flex-col space-y-3">
-            {comments.map((comment : commentType) => (
-              <Comment key={comment.uid} comment={comment} postId={postId} />
-            ))}
+        <p className="text-sm text-gray-600 flex items-center space-x-0 cursor-pointer"><span>Most recent</span> <FaCaretDown className="text-xl" /></p>
+        <div className="flex flex-col space-y-3">
+           {comments.map((comment : any) => (
+            <Comment key={comment.id} uid={uid} postId={postId} commentId={comment.id} comment={comment} />
+           ))}
            </div>
-        )}
        
       </div>
     </div>

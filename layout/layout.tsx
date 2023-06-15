@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar/navbar";
 import { useAuthState } from "react-firebase-hooks/auth";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth, firestore } from "@/firebase/firebase.config";
 import AuthModal from "@/components/modal/authModal";
 import PageLoading from "@/components/pageLoading";
@@ -20,7 +20,7 @@ const Layout = ({ children }: Props) => {
   const userDocRef = doc(firestore, `users/${user?.uid}`)
 
 
-  useMemo(() => {
+  useEffect(() => {
 
     onAuthStateChanged(auth, (data) => {
       data?.getIdToken().then((token) => {
@@ -28,7 +28,7 @@ const Layout = ({ children }: Props) => {
       })
     })
 
-  }, [])
+  }, [firestore])
   
   
   
