@@ -30,3 +30,8 @@ export const UserState = atom<userType>({
   key: "userState",
   default : defaultState
 });
+
+export const QueryState = atom<userType>({
+  key: "queryState",
+  default : defaultState
+});

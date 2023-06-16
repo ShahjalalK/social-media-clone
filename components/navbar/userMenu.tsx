@@ -11,11 +11,14 @@ import { Dropdown } from 'flowbite-react'
 import { signOut } from 'firebase/auth'
 import { auth } from '@/firebase/firebase.config'
 import Cookies from 'js-cookie'
+import { useRecoilValue } from 'recoil'
+import { UserState } from '@/recoil/userAuthAtom'
 
 type Props = {}
 
 const UserMenu = (props: Props) => {
     const router = useRouter()
+    const userValue = useRecoilValue(UserState)
   return (
     <div className="border-r flex items-center space-x-5 lg:space-x-0  lg:pr-5 whitespace-nowrap">
         <Link href="/" className={`flex flex-col text-gray-500 hover:text-gray-900 text-sm capitalize lg:px-5 py-1 items-center lg:border-b-2 border-transparent   ${router.pathname === "/" ? "!border-gray-900 text-gray-900" : ""} `}>
@@ -53,7 +56,7 @@ const UserMenu = (props: Props) => {
 
         <Dropdown
   label={<div className="hidden lg:flex flex-col text-gray-500 hover:text-gray-900 text-xs  px-5 py-1 items-center capitalize cursor-pointer">
-  <Image src="/images.png" alt="u" width={26} height={26} className="rounded-full" />
+  <Image src={userValue.photoURL} alt="u" width={26} height={26} className="rounded-full" />
   <p className="text-xs flex items-center">Me <FaCaretDown className="text-lg" /></p>
 </div>}
 inline={true}
@@ -64,13 +67,13 @@ arrowIcon={false}
   <div className=" max-w-xs p-3 flex flex-col space-y-5 overflow-hidden">
   <div className="flex flex-col space-y-3">
     <div className="flex items-center">
-    <Image src="/user.png" alt="u" width={35} height={35} className="rounded-full w-12 h-12 border object-cover" />
+    <Image src={userValue.photoURL} alt="u" width={35} height={35} className="rounded-full w-12 h-12 border object-cover" />
     <div className="flex flex-col space-y-0 px-2 overflow-hidden">
-        <h1 className="capitalize font-bold">Shahjalal Khan</h1>
-        <p className="line-clamp-2">laborum corporis? Delectus eius dolore voluptates consectetur voluptate praesentium alias minus consequatur excepturi, doloribus, eligendi, soluta quae! Optio illum inventore incidunt earum laudantium amet voluptatum maiores fuga blanditiis, quo asperiores vero! </p>
+        <h1 className="capitalize font-bold">{userValue.displayName || userValue.email.split("@")[0]}</h1>
+        <p className="line-clamp-2">{userValue.title || "Edit your profile"}</p>
     </div>
     </div>
-    <button className="w-full rounded-full py-1 border text-blue-600 hover:text-blue-800 capitalize border-blue-600 hover:border-blue-800 focus:border-2 font-bold transition-colors duration-300 ease-in-out">view profile</button>
+    <Link href="/in/[pid]" as={`/in/${userValue.uid}`} className="w-full rounded-full py-1 border text-blue-600 hover:text-blue-800 capitalize border-blue-600 hover:border-blue-800 focus:border-2 font-bold transition-colors duration-300 ease-in-out text-center hover:bg-blue-100">view profile</Link>
   </div>
 
 
