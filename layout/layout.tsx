@@ -6,7 +6,7 @@ import AuthModal from "@/components/modal/authModal";
 import PageLoading from "@/components/pageLoading";
 import AlartWithValidation from "@/components/alartWithValidation";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import Cookies from "js-cookie";
 
 type Props = {
@@ -52,8 +52,6 @@ useEffect(() => {
         description : ""
       })
 
-     
-      
     }
   }
   )

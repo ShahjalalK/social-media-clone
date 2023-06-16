@@ -6,7 +6,7 @@ import Moment from 'react-moment'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { firestore } from '@/firebase/firebase.config'
 import { parseCookies } from 'nookies'
-
+import {useRouter} from 'next/router'
 type Props = {
   postId : string;
   commentId : string;
@@ -23,8 +23,7 @@ const Comment = ({uid, postId, commentId, comment}: Props) => {
   const cookies = parseCookies()
   const userCookie = cookies.user ? JSON.parse(cookies.user) : ""
   
-  console.log("cookieuid", userCookie.uid)
-  console.log("userUid", uid)
+  const router = useRouter()
 
 
   return (
@@ -33,7 +32,7 @@ const Comment = ({uid, postId, commentId, comment}: Props) => {
     <div className="bg-gray-200 rounded p-3 flex flex-col space-y-2 flex-grow">
     <div className="flex items-start justify-between">
         <div>
-        <h4 className=" capitalize font-medium text-sm">{comment.data().displayName || comment.data().email.split("@")[0]}</h4>
+        <h4 className=" capitalize font-medium cursor-pointer text-sm" onClick={() => router.push(`/in/${comment.data().uid}`)}>{comment.data().displayName || comment.data().email.split("@")[0]}</h4>
         <p className='text-sm text-gray-500 line-clamp-1'>{comment.data().title || "Edit your profile"}</p>
         </div>
         <div className="flex items-center space-x-1 whitespace-nowrap">          

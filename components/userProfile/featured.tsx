@@ -13,12 +13,14 @@ import { useRouter } from "next/router";
 
 
 
-type Props = {}
+type Props = {
+  queryPosts : any
+}
 
-const Featured = (props: Props) => {
+const Featured = ({queryPosts}: Props) => {
     const router = useRouter()
-    const postHandler = () => {
-        router.push("/")
+    const postHandler = (id : string) => {
+        router.push(`/#${id}`)
     }
       
        
@@ -30,7 +32,7 @@ const Featured = (props: Props) => {
       
       spaceBetween={10}
       grabCursor={false}
-      centeredSlides={true}
+      // centeredSlides={true}
 
       breakpoints={{
         640: {
@@ -57,15 +59,18 @@ const Featured = (props: Props) => {
       className="w-full h-full mx-auto featuredSlider"
      
     >
-      <SwiperSlide onClick={postHandler} className="border rounded p-1 overflow-hidden flex flex-col cursor-pointer space-y-1 justify-start items-start text-start shadow
-      ">
-        <p className="text-sm text-gray-400 text-start">Post</p>
-        <p className="text-sm line-clamp-2 text-start">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum cumque facere delectus illo nisi quos expedita asperiores, molestias tenetur quibusdam. Quidem in ad delectus corrupti omnis vitae architecto fugit, ex maiores ipsa nostrum quis, fuga reiciendis tempora? Odio quia, error quo quidem voluptates commodi totam. Temporibus laboriosam hic maxime facilis.</p>
-        <Image src="/post1.webp" alt="p" width={300} height={300} className="w-full h-32 object-fill" />
-        <div className="text-xs flex items-center space-x-1">
-            <p className="text-sm flex items-center space-x-0"> <AiFillHeart className="text-sm text-red-600" /> <span className="text-xs">19</span></p><span>.</span><p>14 comments</p>
-        </div>
-      </SwiperSlide>
+      {queryPosts.map((post : any, index : number) => (
+           <SwiperSlide key={post.id} onClick={() => postHandler(post.id)} className="border rounded p-1 overflow-hidden flex flex-col cursor-pointer space-y-1 justify-start items-start text-start shadow
+           ">
+             <p className="text-sm text-gray-400 text-start">Post- {index + 1}</p>
+             <p className="text-sm line-clamp-2 text-start">{post.data().content}</p>
+             {post.data().media ? <Image src={post.data().media} alt="p" width={300} height={300} className="w-full h-32 object-fill" /> : <div className="w-full h-32"></div>}
+             <div className="text-xs flex items-center space-x-1">
+                 <p className="text-sm flex items-center space-x-0"> <AiFillHeart className="text-sm text-red-600" /> <span className="text-xs">19</span></p><span>.</span><p>14 comments</p>
+             </div>
+           </SwiperSlide>
+      ))}
+     
 
       
 

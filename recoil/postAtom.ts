@@ -12,7 +12,23 @@ export interface postType {
     media : string;
     timestamp : Timestamp;
     postId : string;
-    token : string
+    token : string;
+    previewImage : string
+
+}
+
+export interface addPostType {
+    content : string;
+    title : string;
+    displayName : string;
+    photoURL : string;
+    email : string;
+    uid : string;
+    media : File;
+    timestamp : Timestamp;
+    postId : string;
+    token : string;
+    previewImage : string
 
 }
 
@@ -23,6 +39,7 @@ export interface likeType {
     postId : string;
     email : string;
     displayName : string;
+    
 }
 
 export interface commentType{
@@ -34,11 +51,27 @@ export interface commentType{
     title : string
 }
 
+const defaultAddPostData : addPostType = {
+    content : "",
+    postId : "",
+    title : "",
+    displayName : "",
+    previewImage : "",
+    photoURL : "",
+    email :" ",
+    uid : "",
+    media : {} as File,
+    timestamp : Timestamp as any,
+    token : ""
+   
+}
+
 const defaultPostData : postType = {
     content : "",
     postId : "",
     title : "",
     displayName : "",
+    previewImage : "",
     photoURL : "",
     email :" ",
     uid : "",
@@ -47,6 +80,11 @@ const defaultPostData : postType = {
     token : ""
    
 }
+
+export const addPostData = atom<addPostType>({
+    key : "addPostData",
+    default : defaultAddPostData
+})
 
 export const PostData = atom<postType>({
     key : "PostData",
@@ -58,13 +96,6 @@ export const AllPostData = atom<postType[]>({
     default : []
 })
 
-export const AllLikeData = atom<likeType[]>({
-    key : "AllLikeData",
-    default : []
-})
 
-export const CommentsState = atom<any[]>({
-    key : "CommentsState",
-    default : []
-})
+
 

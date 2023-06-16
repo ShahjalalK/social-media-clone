@@ -4,13 +4,17 @@ import {BiWorld} from 'react-icons/bi'
 import { Avatar } from 'flowbite-react'
 import LikeComments from './likecomments'
 import { useRecoilValue } from 'recoil'
-import { AllLikeData, AllPostData, postType } from '@/recoil/postAtom'
+import {AllPostData, postType } from '@/recoil/postAtom'
 import Link from 'next/link'
 import Moment from 'react-moment'
 import FirebasePostApi from '@/firebaseApi/firebasePostApi'
 import { UserState } from '@/recoil/userAuthAtom'
-import { firestore } from '@/firebase/firebase.config'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { firestore, storage } from '@/firebase/firebase.config'
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { useRouter } from 'next/router'
+import { MdDelete } from 'react-icons/md'
+import { deleteObject, ref } from 'firebase/storage'
+import { toast } from 'react-toastify'
 
 type Props = {
   post : postType
@@ -19,6 +23,8 @@ type Props = {
 const PostCard = ({post}: Props) => {
 const [comments, setComments] = useState([])
 const [likes, setLikes] = useState([])
+const router = useRouter()
+const userValue = useRecoilValue(UserState)
 
 useEffect(() => {
   onSnapshot(query(collection(firestore, "posts", post.postId, "comments"), orderBy("timeStamp", "desc") ), (snapshot) => {
@@ -31,20 +37,43 @@ useEffect(() => {
     setLikes(snapshot.docs as any)
   })
 }, [firestore, post.postId])
+
+const deleteHandler = async() => {
+ if(post.uid === userValue.uid) {
+  const storageRef = ref(storage, `images/${post.postId}`);
+await deleteObject(storageRef).then(() => { 
+   
+  }).catch((error) => {
+    // Uh-oh, an error occurred!
+  });
+  const deleteRef = doc(firestore, "posts", post.postId)
+await deleteDoc(deleteRef).then(() => {
+  toast("Post has been deleted")
+}).catch((error) => {
+  console.log(error.message)
+})
+
+ }
+}
   
   return (
-    <div className="bg-white rounded-lg shadow border-gray-300 py-3 px-5 flex flex-col space-y-2">
-        <Link href="/in/[pid]" as={`/in/${post.uid}`} className="flex items-center space-x-2 cursor-pointer">
+    <div id={post.postId} className="bg-white rounded-lg shadow border-gray-300 py-3 px-5 flex flex-col space-y-2">
+        <div className="flex flex-grow items-start">
+        <div onClick={() => {
+          router.push(`/in/${post.uid}`)
+        }}  className="flex items-center space-x-2 cursor-pointer flex-grow">
             <Image src={post.photoURL} width={70} height={70} alt="p" className="w-14 h-14 rounded-full border object-cover" />
             <div>
                 <h4 className="font-medium text-sm hover:text-blue-600 hover:underline capitalize">{post.displayName || post.email.split("@")[0]}</h4>
                 <p className="line-clamp-1 text-sm text-gray-500">{post.title || "Edit your profile"}</p>
                 <p className="text-sm text-gray-500 flex items-center space-x-1"><span> <Moment fromNow>{post.timestamp?.toDate()}</Moment> .</span> <BiWorld /></p>
             </div>
-        </Link>
+        </div>
+       {post.uid === userValue.uid && <MdDelete onClick={deleteHandler} className="text-xl text-gray-600 cursor-pointer" />} 
+        </div>
         <div>
             <h1 className="text-sm">{post.content}</h1>
-           {post.media && <Image src={post.media} width={350} height={350} alt='bg' className='w-full h-auto mt-3' />} 
+           {post.media && <Image src={post.media} width={350} height={350} alt='bg' className=' w-full h-auto mx-auto mt-3' />} 
         </div>
         <div className="flex items-center justify-between">
           {likes.length > 0 ? 

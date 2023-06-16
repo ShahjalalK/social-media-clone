@@ -8,11 +8,12 @@ type Props = {};
 
 const HomeCenterSide = (props: Props) => {
   const allPostValue = useRecoilValue(AllPostData)
-  console.log(allPostValue)
+  
   
   return (
     <div className="lg:col-span-2 flex flex-col space-y-5 ">
       <PostAdd />
+
       {allPostValue.map((item) => (
         <PostCard key={item.uid} post={item} />
       ))}

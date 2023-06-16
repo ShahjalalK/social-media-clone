@@ -7,17 +7,16 @@ import { auth, firestore } from '@/firebase/firebase.config'
 import FirebaseFireStoreApi from '@/firebaseApi/firebaseFirestoreApi'
 import FirebasePostApi from '@/firebaseApi/firebasePostApi'
 import MetaSeo from '@/metaSeo/metaSeo'
-import { AllLikeData, AllPostData } from '@/recoil/postAtom'
-import React, {  useCallback, useEffect, useMemo } from 'react'
+import { UserState } from '@/recoil/userAuthAtom'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import React, {  useCallback, useEffect, useMemo, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useRecoilValue } from 'recoil'
 
 type Props = {}
 
 const Home = (props: Props) => {
   const [user, loading, error] = useAuthState(auth);
-  const allPost = useRecoilValue(AllPostData)
-  const allLike = useRecoilValue(AllLikeData)
+  
   const {userQuery} = FirebaseFireStoreApi()
   const {getAllPost} = FirebasePostApi()
 
@@ -34,7 +33,7 @@ const Home = (props: Props) => {
   }, [firestore])
 
 
- 
+
 
 
   return (

@@ -1,4 +1,4 @@
-import React, { ReactFragment, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots, FaCaretDown } from "react-icons/fa";
@@ -6,10 +6,7 @@ import { MdOutlineRepeat } from "react-icons/md";
 import Comment from "./comment";
 import FirebasePostApi from "@/firebaseApi/firebasePostApi";
 import { useRecoilValue } from "recoil";
-import { AllLikeData, CommentsState, commentType } from "@/recoil/postAtom";
 import { UserState } from "@/recoil/userAuthAtom";
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from "firebase/firestore";
-import { firestore } from "@/firebase/firebase.config";
 
 
 type Props = {
@@ -96,7 +93,7 @@ const LikeComments = ({likes, uid, comments, postId}: Props) => {
           <button type="submit" className={`${!comment.trim( ) ? "hidden" : " inline-flex"} rounded-full px-5 py-2 bg-blue-600 hover:bg-blue-800 text-white font-medium absolute top-[50%] right-1 -translate-y-[50%] text-sm`} disabled={!comment.trim( )}>Post</button>
           </form>
         </div>
-        <p className="text-sm text-gray-600 flex items-center space-x-0 cursor-pointer"><span>Most recent</span> <FaCaretDown className="text-xl" /></p>
+        {comments.length > 0 && <p className="text-sm text-gray-600 flex items-center space-x-0 cursor-pointer"><span>Most recent</span> <FaCaretDown className="text-xl" /></p>}
         <div className="flex flex-col space-y-3">
            {comments.map((comment : any) => (
             <Comment key={comment.id} uid={uid} postId={postId} commentId={comment.id} comment={comment} />

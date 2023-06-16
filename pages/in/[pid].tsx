@@ -3,12 +3,13 @@ import LeftSide from '@/components/userProfile/leftSide'
 import RightSide from '@/components/userProfile/rightSide'
 import { auth, firestore } from '@/firebase/firebase.config'
 import FirebaseFireStoreApi from '@/firebaseApi/firebaseFirestoreApi'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { QueryState, UserState } from '@/recoil/userAuthAtom'
 import MetaSeo from '@/metaSeo/metaSeo'
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 
 type Props = {}
 
@@ -18,6 +19,9 @@ const ProfileId = (props: Props) => {
   const router = useRouter()
   const [user, loading, error] = useAuthState(auth);
   const {userQuery, userPidQuery} = FirebaseFireStoreApi()
+  const [queryPosts, setQueryPosts] = useState([])
+
+  console.log("postQuery", queryPosts)
 
 
   const pid = router.query.pid as string
@@ -32,7 +36,16 @@ const ProfileId = (props: Props) => {
   }, [firestore])
 
   useEffect(() => {
-    userQuery()
+    userQuery()  
+    
+  }, [firestore])
+  
+
+  useEffect(() => {
+    const q = query(collection(firestore, "posts"), where("uid", "==", pid), orderBy("timestamp", "desc"))
+    onSnapshot(q, (snapshot) => {
+      setQueryPosts(snapshot.docs as any)
+    })
   }, [firestore])
 
 
@@ -50,7 +63,7 @@ const ProfileId = (props: Props) => {
       
         (
           <>
-           <LeftSide />
+           <LeftSide queryPosts={queryPosts} />
           <RightSide />
           </>
         )

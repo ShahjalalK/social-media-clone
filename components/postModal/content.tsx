@@ -1,11 +1,11 @@
-import { PostData } from '@/recoil/postAtom'
+import { PostData, addPostData } from '@/recoil/postAtom'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 
 type Props = {}
 
 const Content = (props: Props) => {
-    const [postText, setPostText] = useRecoilState(PostData)
+    const [postText, setPostText] = useRecoilState(addPostData)
     console.log(postText)
   return (
     <div className="flex flex-col space-y-5">

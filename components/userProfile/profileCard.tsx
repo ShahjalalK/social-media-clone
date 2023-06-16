@@ -19,11 +19,13 @@ import { editProfileState } from "@/recoil/editProfileAtom";
 import ConnectionApi from "@/firebaseApi/connectionApi";
 import { firestore } from "@/firebase/firebase.config";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {useRouter} from 'next/router'
 
 type Props = {};
 
 const ProfileCard = (props: Props) => {
   const [notify, setNotify] = useState(false);
+  const router = useRouter()
   const [follows, setFollows] = useState([]);
   const [hashFollow, setHashFollow] = useState<boolean>(false);
   const queryUserValue = useRecoilValue(QueryState);
@@ -181,9 +183,16 @@ const ProfileCard = (props: Props) => {
               ))}
             </div>
 
-            <span className=" capitalize text-blue-700 text-sm hover:underline cursor-pointer">
-            {follows.slice(0, 1).map((item: any) => <span key={item.id}>{(item.data().displayName || item.data().email.split("@")[0])}</span>)} and {follows.length} other mutual connections
-            </span>
+            {follows.length > 0 ? (
+              <span className=" capitalize text-blue-700 text-sm hover:underline cursor-pointer">
+              {follows.slice(0, 1).map((item: any) => <span key={item.id}>{(item.data().displayName || item.data().email.split("@")[0])}</span>)} and {follows.length} other mutual connections
+              </span>
+            )
+          :
+          (
+            <span className=" capitalize text-blue-700 text-sm hover:underline cursor-pointer">0 connections</span>
+          )
+          }
           </div>
           <div className="flex items-center space-x-5">
             {userCookie.token === queryUserValue.token ? (
@@ -219,7 +228,7 @@ const ProfileCard = (props: Props) => {
                     <BiPlus /> <span>Follow</span>
                   </button>
                 )}
-                <button className="px-3 py-1 border border-blue-600  text-blue-600 font-medium rounded-full flex items-center space-x-1 hover:bg-blue-100">
+                <button onClick={() => router.push("/messaging")} className="px-3 py-1 border border-blue-600  text-blue-600 font-medium rounded-full flex items-center space-x-1 hover:bg-blue-100">
                   {" "}
                   <BsFillSendFill /> <span>Message</span>
                 </button>

@@ -1,21 +1,24 @@
 import { usePostModalState } from '@/recoil/usePostModalAtom'
 import { Modal } from 'flowbite-react'
 import React, { useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import Content from './content'
 import Image from 'next/image'
 import SubmitPost from './submitPost'
 import Media from './media'
+import { addPostData } from '@/recoil/postAtom'
 
 type Props = {}
 
 const PostModal = (props: Props) => {
     const [postModal, setPostModal] = useRecoilState(usePostModalState)
+    const resetPost = useResetRecoilState(addPostData)
   const modalHandler = () => {
     setPostModal((prev) => ({
         ...prev,
         open : false
     }))
+    resetPost()
   }
     return (
        
