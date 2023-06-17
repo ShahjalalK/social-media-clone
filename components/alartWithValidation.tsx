@@ -1,10 +1,13 @@
+import { auth } from '@/firebase/firebase.config'
 import { Alert } from 'flowbite-react'
 import React from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import {HiInformationCircle} from 'react-icons/hi2'
 
 type Props = {}
 
 const AlartWithValidation = (props: Props) => {
+  const [user, loading, error] = useAuthState(auth)
   return (
     <Alert
       color="failure"
@@ -14,9 +17,9 @@ const AlartWithValidation = (props: Props) => {
       <span>
         <p>
           <span className="font-medium">
-            Info alert!
-          </span>
-          Change a few things up and try submitting again.
+            Your Email is not verified! 
+          </span> &nbsp;
+           Please verify your email address- {user?.email}
         </p>
       </span>
     </Alert>

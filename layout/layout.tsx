@@ -76,7 +76,7 @@ useEffect(() => {
 }, [token])
 
   return (
-    <main>
+    <>
       {user ? (
         loading ? (
           <PageLoading />
@@ -91,7 +91,7 @@ useEffect(() => {
       ) : (
         <AuthModal />
       )}
-    </main>
+    </>
   );
 };
 

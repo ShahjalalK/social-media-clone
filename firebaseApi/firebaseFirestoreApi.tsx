@@ -1,5 +1,5 @@
 import { auth, firestore } from '@/firebase/firebase.config';
-import { QueryState, UserState, userType } from '@/recoil/userAuthAtom';
+import { AllUserState, QueryState, UserState, userType } from '@/recoil/userAuthAtom';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -12,6 +12,8 @@ const FirebaseFireStoreApi = () => {
     const [user, loading, error] = useAuthState(auth);
     const setUserState = useSetRecoilState<userType>(UserState)
     const setQueryState = useSetRecoilState<userType>(QueryState)
+    const setAllUserState = useSetRecoilState<userType[]>(AllUserState)
+
 
    const userQuery = () => {
     const queryRef = query(collection(firestore, "users"), where("uid", "==", user?.uid as string))
@@ -33,10 +35,19 @@ const FirebaseFireStoreApi = () => {
     })
    }
 
+   const getAllUser = () => {
+      const userRef = collection(firestore, "users")
+      onSnapshot(userRef, (snapshot) => {
+        setAllUserState(snapshot.docs.map((item) => {
+          return item.data() as userType
+        }))
+      })
+   }
+
   
 
   return {
-    userQuery, userPidQuery
+    userQuery, userPidQuery, getAllUser
   }
 }
 

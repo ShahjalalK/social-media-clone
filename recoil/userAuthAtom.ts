@@ -24,6 +24,7 @@ const defaultState: userType = {
   location: "",
   webURL: "",
   description: "",
+  
 };
 
 export const UserState = atom<userType>({
@@ -34,4 +35,9 @@ export const UserState = atom<userType>({
 export const QueryState = atom<userType>({
   key: "queryState",
   default : defaultState
+});
+
+export const AllUserState = atom<userType[]>({
+  key: "AllUserState",
+  default : []
 });

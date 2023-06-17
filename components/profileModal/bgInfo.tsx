@@ -3,13 +3,14 @@ import Image from 'next/image'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { UserState } from '@/recoil/userAuthAtom'
 import UpdateProfileApi from '@/firebaseApi/updateProfileApi'
-import { firestore, storage } from '@/firebase/firebase.config'
+import { auth, firestore, storage } from '@/firebase/firebase.config'
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid';
 import { doc, updateDoc } from 'firebase/firestore'
 import { Spinner } from 'flowbite-react'
 import { toast } from 'react-toastify'
 import { editProfileState } from '@/recoil/editProfileAtom'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 type Props = {}
@@ -17,6 +18,7 @@ type Props = {}
 const BgInfo = (props: Props) => {  
   const userValue = useRecoilValue(UserState)
   const setEditProfile = useSetRecoilState(editProfileState)
+  const [user, userLoading, error] = useAuthState(auth)
   const [loading, setLoading] = useState<boolean>(false)
   const [currentImg, setCurrentImg] = useState<File>()
   const [previewImage, setPreivewImage] = useState<string>("")
@@ -34,6 +36,10 @@ const BgInfo = (props: Props) => {
   
 
   const submitHandler = async () => {
+    if(!user?.emailVerified){
+      return toast("Please verify your email address")
+    }
+
     setLoading(true)  
    
 

@@ -17,7 +17,7 @@ type Props = {}
 const Home = (props: Props) => {
   const [user, loading, error] = useAuthState(auth);
   
-  const {userQuery} = FirebaseFireStoreApi()
+  const {userQuery, getAllUser} = FirebaseFireStoreApi()
   const {getAllPost} = FirebasePostApi()
 
  
@@ -29,6 +29,11 @@ const Home = (props: Props) => {
 
   useEffect(() => {
     userQuery()  
+    
+  }, [firestore])
+
+  useEffect(() => {
+    getAllUser()  
     
   }, [firestore])
 

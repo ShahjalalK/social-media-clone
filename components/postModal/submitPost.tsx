@@ -25,9 +25,8 @@ const SubmitPost = (props: Props) => {
   const submitHandler = async () => {
    
 
-    if(!user?.emailVerified) {
-      
-      return toast("Please, verify your email!")
+    if(!user?.emailVerified){
+      return toast("Please verify your email address")
     }
     setLoading(true)
 

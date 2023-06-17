@@ -18,7 +18,7 @@ const ProfileId = (props: Props) => {
   const queryUserValue = useRecoilValue(QueryState)
   const router = useRouter()
   const [user, loading, error] = useAuthState(auth);
-  const {userQuery, userPidQuery} = FirebaseFireStoreApi()
+  const {userQuery, userPidQuery, getAllUser} = FirebaseFireStoreApi()
   const [queryPosts, setQueryPosts] = useState([])
 
   console.log("postQuery", queryPosts)
@@ -46,6 +46,11 @@ const ProfileId = (props: Props) => {
     onSnapshot(q, (snapshot) => {
       setQueryPosts(snapshot.docs as any)
     })
+  }, [firestore])
+
+  useEffect(() => {
+    getAllUser()  
+    
   }, [firestore])
 
 

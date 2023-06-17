@@ -1,16 +1,18 @@
-import { firestore } from '@/firebase/firebase.config'
+import { auth, firestore } from '@/firebase/firebase.config'
 import { editProfileState } from '@/recoil/editProfileAtom'
 import { UserState, userType } from '@/recoil/userAuthAtom'
 import { doc, updateDoc } from 'firebase/firestore'
 import { Spinner } from 'flowbite-react'
 import { userInfo } from 'os'
 import React, { useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { toast } from 'react-toastify'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 type Props = {}
 
 const ProfileInfo = (props: Props) => {
+  const [user, userLoading, error] = useAuthState(auth)
   const [userValue, setUserUserValue] = useRecoilState(UserState)
   const setEditProfile = useSetRecoilState(editProfileState)
  
@@ -24,6 +26,9 @@ const ProfileInfo = (props: Props) => {
 
   const submitHandler = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if(!user?.emailVerified){
+      return toast("Please verify your email address")
+    }
     setLoading(true)
     const docRef = doc(firestore, `users/${userValue.uid}`)
     updateDoc(docRef, {

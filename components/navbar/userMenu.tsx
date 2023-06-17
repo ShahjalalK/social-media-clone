@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import {AiFillHome} from 'react-icons/ai'
 import {HiUsers} from 'react-icons/hi'
@@ -56,7 +57,7 @@ const UserMenu = (props: Props) => {
 
         <Dropdown
   label={<div className="hidden lg:flex flex-col text-gray-500 hover:text-gray-900 text-xs  px-5 py-1 items-center capitalize cursor-pointer">
-  <Image src={userValue.photoURL} alt="u" width={26} height={26} className="rounded-full" />
+  <Image src={userValue.photoURL} alt="u" width={26} height={26} className="rounded-full w-6 h-6 object-cover" />
   <p className="text-xs flex items-center">Me <FaCaretDown className="text-lg" /></p>
 </div>}
 inline={true}

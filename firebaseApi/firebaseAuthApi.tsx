@@ -3,6 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { useMemo, useState } from "react";
 import {
   useCreateUserWithEmailAndPassword,
+  useSendEmailVerification,
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
  
@@ -23,7 +24,7 @@ const FirebaseAuthApi = () => {
     useSignInWithEmailAndPassword(auth);
 
   
-
+    const [sendEmailVerification, veryFysending, error] = useSendEmailVerification(auth);
   const [sendPasswordResetEmail, sending, restError] =
     useSendPasswordResetEmail(auth);
   const [successReset, setSuccessReset] = useState(false);
@@ -31,6 +32,7 @@ const FirebaseAuthApi = () => {
   const signup = async (email: string, password: string) => {
     const res = await createUserWithEmailAndPassword(email, password);
     if (res) {
+      sendEmailVerification()
       toast("You have successfully signed up");
     }
   };

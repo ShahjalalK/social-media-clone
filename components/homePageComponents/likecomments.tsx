@@ -7,6 +7,9 @@ import Comment from "./comment";
 import FirebasePostApi from "@/firebaseApi/firebasePostApi";
 import { useRecoilValue } from "recoil";
 import { UserState } from "@/recoil/userAuthAtom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/firebase.config";
+import { toast } from "react-toastify";
 
 
 type Props = {
@@ -19,6 +22,7 @@ type Props = {
 const LikeComments = ({likes, uid, comments, postId}: Props) => {
   const {commentPost, likePost} = FirebasePostApi()  
   const userValue = useRecoilValue(UserState)
+  const [user, loading, error] = useAuthState(auth)
 
  
     const [showComment, setShowComment] = useState<boolean>(false)
@@ -36,6 +40,9 @@ const LikeComments = ({likes, uid, comments, postId}: Props) => {
 
   const commentHandler = async (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if(!user?.emailVerified){
+      return toast("Please verify your email address")
+    }
     const commentToSend = comment
     setComment("")
     await commentPost(commentToSend, postId )
@@ -46,6 +53,9 @@ const LikeComments = ({likes, uid, comments, postId}: Props) => {
   }, [likes])
 
   const likeHandler = async () => {
+    if(!user?.emailVerified){
+      return toast("Please verify your email address")
+    }
     await likePost(postId, hashLiked)
     setShowComment(true)
   }

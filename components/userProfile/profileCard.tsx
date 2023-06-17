@@ -17,9 +17,11 @@ import { QueryState, UserState } from "@/recoil/userAuthAtom";
 import { parseCookies } from "nookies";
 import { editProfileState } from "@/recoil/editProfileAtom";
 import ConnectionApi from "@/firebaseApi/connectionApi";
-import { firestore } from "@/firebase/firebase.config";
+import { auth, firestore } from "@/firebase/firebase.config";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import {useRouter} from 'next/router'
+import { toast } from "react-toastify";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 type Props = {};
 
@@ -34,6 +36,7 @@ const ProfileCard = (props: Props) => {
   const { followUser } = ConnectionApi();
   const cookies = parseCookies();
   const userCookie = cookies.user ? JSON.parse(cookies.user) : "";
+const [user, userLoading, error] = useAuthState(auth)
 
   const BgHandler = () => {
     setProfileState((prev) => ({
@@ -60,6 +63,9 @@ const ProfileCard = (props: Props) => {
   };
 
   const followHandler = async () => {
+    if(!user?.emailVerified){
+      return toast("Please verify your email address")
+    }
     followUser(queryUserValue.uid, hashFollow);
   };
 
