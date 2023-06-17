@@ -20,8 +20,8 @@ const Media = (props: Props) => {
     
   return (
     <div className="w-full h-72">
-         <label className="w-full h-full items-center flex justify-center cursor-pointer" htmlFor="media">
-             {post.previewImage ? <Image src={post.previewImage} alt='p' width={650} height={350} className="w-full h-full" /> : <BsFillCameraFill className=" text-9xl text-blue-200 " />}   
+         <label className="w-full h-72 overflow-y-auto items-center flex justify-center cursor-pointer" htmlFor="media">
+             {post.previewImage ? <Image src={post.previewImage} alt='p' width={650} height={350} className="w-full h-auto" /> : <BsFillCameraFill className=" text-9xl text-blue-200 " />}   
             </label>
             <input onChange={changeHandler} id='media' className="hidden" type="file" />
     </div>

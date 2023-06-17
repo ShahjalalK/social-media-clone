@@ -3,7 +3,7 @@ import Sujest from './sujest'
 import Link from 'next/link'
 import {BsArrowRight} from 'react-icons/bs'
 import { useRecoilValue } from 'recoil'
-import { AllUserState, UserState } from '@/recoil/userAuthAtom'
+import { AllUserState, UserState, userType } from '@/recoil/userAuthAtom'
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import { auth, firestore } from '@/firebase/firebase.config'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -12,25 +12,24 @@ type Props = {}
 
 const HomeRightSide = (props: Props) => {
   const allUserValue = useRecoilValue(AllUserState)
-  const [follows, setFollows] = useState([]);
-  const [hashFollow, setHashFollow] = useState<boolean>(false);
   const userValue = useRecoilValue(UserState)
-  const [user, loading, error] = useAuthState(auth)
+  const  getRandomItem = (arr : any) => {
 
-  useEffect(() => {
-    setHashFollow(
-      follows.some((follow: any) => follow.data().uid === userValue.uid)
-    );
-  }, [follows]);
+    // get random index value
+    const randomIndex = Math.floor(Math.random() * arr.length);
+  
+    // get random item
+    const item = arr[randomIndex];
+  
+    return item;
+  }
+  
+  const array = [allUserValue];
+  
+  const result = getRandomItem(array);
 
-  useEffect(() => {
-    onSnapshot(
-      query(collection(firestore, "users", user?.uid as string, "following"), orderBy("timeStamp", "desc")),
-      (snapshot) => {
-        setFollows(snapshot.docs as any);
-      }
-    );
-  }, [firestore]);
+
+  
 
   return (
     <div className="bg-white rounded-lg shadow p-2 border border-gray-300 flex flex-col space-y-5">
@@ -40,8 +39,8 @@ const HomeRightSide = (props: Props) => {
       </div>
      <div className="flex flex-col space-y-2">
     {
-     allUserValue.filter((item) => item.uid != userValue.uid).map((item) => 
-     <Sujest key={item.uid} item={item} hashFollow={hashFollow} />
+     result.filter((filst : userType) => filst.uid != userValue.uid).splice(0, 3).map((item : userType) => 
+     <Sujest key={item.uid} item={item}/>
      )
         
     }

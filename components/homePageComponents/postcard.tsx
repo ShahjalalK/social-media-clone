@@ -69,7 +69,7 @@ await deleteDoc(deleteRef).then(() => {
                 <p className="text-sm text-gray-500 flex items-center space-x-1"><span> <Moment fromNow>{post.timestamp?.toDate()}</Moment> .</span> <BiWorld /></p>
             </div>
         </div>
-       {post.uid === userValue.uid && <MdDelete onClick={deleteHandler} className="text-xl text-gray-600 cursor-pointer" />} 
+       {post.uid === userValue.uid && <span onClick={deleteHandler}  className="text-xl text-gray-600 cursor-pointer whitespace-nowrap"><MdDelete /></span> } 
         </div>
         <div>
             <h1 className="text-sm">{post.content}</h1>
