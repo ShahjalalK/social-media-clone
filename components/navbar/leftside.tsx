@@ -12,11 +12,11 @@ const LeftSide = (props: Props) => {
     <div className="flex  items-center space-x-2">
        <Link href="/"> <Image src="/linkedin.png" alt='linkedin' width={35} height={35} className="w-7 lg:w-9 py-1 lg:py-0" /></Link>
 
-        <div className="text-xl cursor-pointer inline-flex lg:hidden text-gray-600 hover:text-gray-700 z-40"  onClick={() => setSearchShow(true)}>
+        <div className="text-xl cursor-pointer lg:hidden text-gray-600 hover:text-gray-700"  onClick={() => setSearchShow(true)}>
         <AiOutlineSearch  />
         </div>
 
-        <div className={`${searchShow ? "max-lg:block" : "hidden"} lg:inline-flex absolute top-[50%] -translate-y-[50%] left-[4%] sm:left-[6%] lg:left-[3.5%] w-full lg:w-[350px]`}>
+        <div className={`${searchShow ? "max-lg:block" : "hidden"} lg:inline-flex absolute top-[50%] -translate-y-[50%] left-0 -translate-x-[2%] lg:left-[3.5%] w-[98%] lg:w-[350px]`}>
     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none ">
       <AiOutlineSearch className="text-2xl text-gray-400"/>
     </div>

@@ -191,7 +191,7 @@ const [user, userLoading, error] = useAuthState(auth)
 
             {follows.length > 0 ? (
               <span className=" capitalize text-blue-700 text-sm hover:underline cursor-pointer">
-              {follows.slice(0, 1).map((item: any) => <span key={item.id}>{(item.data().displayName || item.data().email.split("@")[0])}</span>)} and {follows.length} other mutual connections
+              {follows.slice(0, 1).map((item: any) => <span className="hidden lg:inline-flex" key={item.id}>{(item.data().displayName || item.data().email.split("@")[0])}</span>)} and {follows.length} other mutual connections
               </span>
             )
           :
@@ -203,15 +203,15 @@ const [user, userLoading, error] = useAuthState(auth)
           <div className="flex items-center space-x-5">
             {userCookie.token === queryUserValue.token ? (
               <>
-                <button className="px-3 py-1 bg-blue-600  text-white font-medium rounded-full flex items-center space-x-1 hover:bg-blue-800">
+                <button className="px-3 py-1 bg-blue-600  text-white font-medium rounded-full flex items-center space-x-1 hover:bg-blue-800 whitespace-nowrap">
                   {" "}
                   Open to
                 </button>
-                <button className="px-3 py-1 border border-blue-600  text-blue-600 font-medium rounded-full flex items-center space-x-1 hover:bg-blue-100">
+                <button className="px-3 py-1 border border-blue-600  text-blue-600 font-medium rounded-full flex items-center space-x-1 hover:bg-blue-100 whitespace-nowrap">
                   {" "}
                   Add profile section
                 </button>
-                <button className="px-3 py-1 border border-gray-600  text-gray-600 font-medium rounded-full hover:bg-gray-300 hover:ring-1 hover:ring-gray-600">
+                <button className="px-3 py-1 border border-gray-600  text-gray-600 font-medium rounded-full hover:bg-gray-300 hover:ring-1 hover:ring-gray-600 whitespace-nowrap">
                   More
                 </button>
               </>

@@ -101,7 +101,7 @@ const SubmitPost = (props: Props) => {
   };
   return (
     <div className="flex items-center justify-between flex-grow">
-      <div className="flex items-center space-x-5">
+      <div className="flex items-center space-x-1 md:space-x-5">
         <div
           onClick={() => {
             setPostModal((prev) => ({
@@ -109,9 +109,9 @@ const SubmitPost = (props: Props) => {
               view: "content",
             }));
           }}
-          className="w-14 h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer"
+          className=" w-10 h-10 md:w-14 md:h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer"
         >
-          <ImTextWidth className="text-2xl" />
+          <ImTextWidth className=" text-xl md:text-2xl" />
         </div>
         <div
           onClick={() => {
@@ -120,9 +120,9 @@ const SubmitPost = (props: Props) => {
               view: "media",
             }));
           }}
-          className="w-14 h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer"
+          className="w-10 h-10 md:w-14 md:h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer"
         >
-          <BsImage className="text-2xl" />
+          <BsImage className="text-xl md:text-2xl" />
         </div>
         <div
           onClick={() => {
@@ -131,13 +131,13 @@ const SubmitPost = (props: Props) => {
               view: "media",
             }));
           }}
-          className="w-14 h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer"
+          className="w-10 h-10 md:w-14 md:h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer"
         >
-          <BsFillCameraVideoFill className="text-2xl" />
+          <BsFillCameraVideoFill className="text-xl md:text-2xl" />
         </div>
 
-        <div className="w-14 h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer">
-          <FiMoreHorizontal className="text-2xl" />
+        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full flex justify-center items-center hover:drop-shadow hover:border hover:shadow-md cursor-pointer">
+          <FiMoreHorizontal className="text-xl md:text-2xl" />
         </div>
       </div>
       <div>
