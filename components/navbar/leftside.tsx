@@ -16,7 +16,7 @@ const LeftSide = (props: Props) => {
         <AiOutlineSearch  />
         </div>
 
-        <div className={`${searchShow ? "max-lg:block" : "hidden"} lg:inline-flex absolute top-[50%] -translate-y-[50%] left-0 -translate-x-[2%] lg:left-[3.5%] w-[98%] lg:w-[350px]`}>
+        <div className={`${searchShow ? "max-lg:block" : "hidden"} lg:inline-flex absolute top-[50%] -translate-y-[50%] left-0 -translate-x-[2%] lg:-translate-x-0 lg:left-[3.5%] w-[98%] lg:w-[350px]`}>
     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none ">
       <AiOutlineSearch className="text-2xl text-gray-400"/>
     </div>

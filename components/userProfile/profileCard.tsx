@@ -211,7 +211,7 @@ const [user, userLoading, error] = useAuthState(auth)
                   {" "}
                   Add profile section
                 </button>
-                <button className="px-3 py-1 border border-gray-600  text-gray-600 font-medium rounded-full hover:bg-gray-300 hover:ring-1 hover:ring-gray-600 whitespace-nowrap">
+                <button className="px-3 hidden md:inline-flex py-1 border border-gray-600  text-gray-600 font-medium rounded-full hover:bg-gray-300 hover:ring-1 hover:ring-gray-600 whitespace-nowrap">
                   More
                 </button>
               </>
