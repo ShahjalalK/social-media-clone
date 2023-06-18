@@ -59,7 +59,7 @@ const UserMenu = (props: Props) => {
         
 
 
-<div onClick={dorpHandoer} className="flex flex-col text-gray-500 hover:text-gray-900 text-xs whitespace-nowrap  px-5 py-1 items-center capitalize cursor-pointer">
+<div onClick={dorpHandoer} className="flex flex-col text-gray-500 hover:text-gray-900 text-xs items-center capitalize cursor-pointer">
   <Image src={userValue.photoURL} alt="u" width={26} height={26} className="rounded-full w-6 h-6 object-cover" />
   <p className="text-xs hidden lg:flex items-center">Me <FaCaretDown className="text-lg lg:inline-flex" /></p>
 </div>

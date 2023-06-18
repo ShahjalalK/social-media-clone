@@ -15,8 +15,8 @@ const LeftSide = (props: Props) => {
         <AiOutlineSearch className="text-2xl cursor-pointer inline-flex lg:hidden" onClick={() => setSearchShow(true)} />
 
         <div className={`${searchShow ? "max-lg:block" : "hidden"} lg:inline-flex absolute top-[50%] -translate-y-[50%] left-[4%] sm:left-[6%] lg:left-[3.5%] w-full lg:w-[350px]`}>
-    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-      <AiOutlineSearch className="text-gray-400 text-2xl" />
+    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none ">
+      <AiOutlineSearch className="text-2xl text-gray-400"/>
     </div>
     <input
    onKeyPress={(e) => {

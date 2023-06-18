@@ -6,8 +6,9 @@ import AuthModal from "@/components/modal/authModal";
 import PageLoading from "@/components/pageLoading";
 import AlartWithValidation from "@/components/alartWithValidation";
 import { onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import Cookies from "js-cookie";
+import { timeStamp } from "console";
 
 type Props = {
   children: React.ReactNode;
@@ -49,7 +50,8 @@ useEffect(() => {
         title : "",
         location : "",
         webURL : "",
-        description : ""
+        description : "",
+        timeStamp : serverTimestamp()
       })
 
     }

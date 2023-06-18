@@ -36,7 +36,7 @@ const FirebaseFireStoreApi = () => {
    }
 
    const getAllUser = () => {
-    const postRef = query(collection(firestore, "users" ))
+    const postRef = query(collection(firestore, "users" ), orderBy("timeStamp", "desc"))
       onSnapshot(postRef, (snapshot) => {
         setAllUserState(snapshot.docs.map((item) => {
           return item.data() as userType

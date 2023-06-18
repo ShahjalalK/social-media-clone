@@ -84,12 +84,12 @@ await deleteDoc(deleteRef).then(() => {
 
             <div className="flex -space-x-4">
    {likes.slice(0, 3).map((item : any) => (
-    <Image key={item.id} className="w-7 h-7 border bg-white rounded-full dark:border-gray-800" src={item.data().photoURL} alt="p" width={50} height={50} /> 
+    <Image key={item.id} className=" w-6 h-6 lg:w-7 lg:h-7 border bg-white rounded-full dark:border-gray-800" src={item.data().photoURL} alt="p" width={50} height={50} /> 
    ) )}
    
 </div>
 
-      {likes.length > 0 && <p className="text-gray-500 hover:text-blue-600 hover:underline cursor-pointer text-xs">{likes.slice(0, 1).map((item : any) => (<span key={item.id}>{(item.data().displayName || item.data().email.split("@")[0])}</span>))} and {likes.length} others</p>}
+      {likes.length > 0 && <p className="text-gray-500 hover:text-blue-600 hover:underline cursor-pointer text-xs">{likes.slice(0, 1).map((item : any) => (<span className="hidden lg:inline-flex" key={item.id}>{(item.data().displayName || item.data().email.split("@")[0])}</span>))} and {likes.length} others</p>}
             </div>
           ) 
           : 

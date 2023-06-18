@@ -44,7 +44,7 @@ const HomeProfileCard = (props: Props) => {
   
   return (
     <div className="bg-white shadow border border-gray-300 rounded-lg overflow-hidden">
-        <div className="w-full h-16 bg-gray-200 reletive">
+        <div className="w-full h-20 lg:h-16 bg-gray-200 reletive">
           {userValue.bgURL && <Image src={userValue.bgURL} width={350} height={300} alt='bg' className="w-full h-full object-fill" />}
         </div>
         <Image src={userValue.photoURL} alt="u" width={70} height={70} className="-mt-10 w-20 h-20  object-cover bg-white rounded-full mx-auto drop-shadow " />
