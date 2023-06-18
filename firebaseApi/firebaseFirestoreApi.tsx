@@ -1,6 +1,6 @@
 import { auth, firestore } from '@/firebase/firebase.config';
 import { AllUserState, QueryState, UserState, userType } from '@/recoil/userAuthAtom';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';

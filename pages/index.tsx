@@ -46,7 +46,7 @@ const Home = (props: Props) => {
    <MetaSeo title="Feed | Linkedin" />
     <div className="padding-section container grid grid-cols-1 lg:grid-cols-4 items-start gap-5">
       {!user?.emailVerified && (
-       <div className=" col-span-1 lg:col-span-4">
+       <div className=" col-span-1 lg:col-span-4 z-40">
        <AlartWithValidation />
      </div>
       )

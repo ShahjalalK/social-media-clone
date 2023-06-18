@@ -20,7 +20,7 @@ body{
     @apply  max-w-6xl mx-1 lg:mx-auto
   }
   .padding-section{
-    @apply pt-10 lg:pt-16 pb-10
+    @apply pt-1 lg:pt-5 pb-10
   }
 }
 

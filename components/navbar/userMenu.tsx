@@ -1,5 +1,5 @@
 'use client';
-import React from 'react'
+import React, { useState } from 'react'
 import {AiFillHome} from 'react-icons/ai'
 import {HiUsers} from 'react-icons/hi'
 import {BsBriefcaseFill, BsChatDotsFill} from 'react-icons/bs'
@@ -20,6 +20,10 @@ type Props = {}
 const UserMenu = (props: Props) => {
     const router = useRouter()
     const userValue = useRecoilValue(UserState)
+    const [showDrop, setShowDrop] = useState<boolean>(false)
+    const dorpHandoer = () => {
+      setShowDrop(!showDrop)
+    }
   return (
     <div className="border-r flex items-center space-x-5 lg:space-x-0  lg:pr-5 whitespace-nowrap">
         <Link href="/" className={`flex flex-col text-gray-500 hover:text-gray-900 text-sm capitalize lg:px-5 py-1 items-center lg:border-b-2 border-transparent   ${router.pathname === "/" ? "!border-gray-900 text-gray-900" : ""} `}>
@@ -55,26 +59,24 @@ const UserMenu = (props: Props) => {
         
 
 
-        <Dropdown
-  label={<div className="hidden lg:flex flex-col text-gray-500 hover:text-gray-900 text-xs  px-5 py-1 items-center capitalize cursor-pointer">
+<div onClick={dorpHandoer} className="flex flex-col text-gray-500 hover:text-gray-900 text-xs whitespace-nowrap  px-5 py-1 items-center capitalize cursor-pointer">
   <Image src={userValue.photoURL} alt="u" width={26} height={26} className="rounded-full w-6 h-6 object-cover" />
-  <p className="text-xs flex items-center">Me <FaCaretDown className="text-lg" /></p>
-</div>}
-inline={true}
-arrowIcon={false}
+  <p className="text-xs hidden lg:flex items-center">Me <FaCaretDown className="text-lg lg:inline-flex" /></p>
+</div>
 
-
->
-  <div className=" max-w-xs p-3 flex flex-col space-y-5 overflow-hidden">
+  <div className={` max-w-[350px] p-3 ${showDrop ? "flex " : "hidden"}  flex-col space-y-5  absolute top-10 lg:top-14 right-0 bg-white shadow rounded`}>
   <div className="flex flex-col space-y-3">
-    <div className="flex items-center">
+    <div className="flex items-start">
     <Image src={userValue.photoURL} alt="u" width={35} height={35} className="rounded-full w-12 h-12 border object-cover" />
-    <div className="flex flex-col space-y-0 px-2 overflow-hidden">
-        <h1 className="capitalize font-bold">{userValue.displayName || userValue.email.split("@")[0]}</h1>
-        <p className="line-clamp-2">{userValue.title || "Edit your profile"}</p>
+    <div className="flex flex-col space-y-0 px-2">
+        <h1 className="capitalize font-bold whitespace-normal line-clamp-1">{userValue.displayName || userValue.email.split("@")[0]}</h1>
+        <p className="line-clamp-2 whitespace-normal">{userValue.title || "Edit your profile"}</p>
     </div>
     </div>
-    <Link href="/in/[pid]" as={`/in/${userValue.uid}`} className="w-full rounded-full py-1 border text-blue-600 hover:text-blue-800 capitalize border-blue-600 hover:border-blue-800 focus:border-2 font-bold transition-colors duration-300 ease-in-out text-center hover:bg-blue-100">view profile</Link>
+    <button onClick={() => {
+      router.push(`/in/${userValue.uid}`)
+      setShowDrop(false)
+    }} className="w-full rounded-full py-1 border text-blue-600 hover:text-blue-800 capitalize border-blue-600 hover:border-blue-800 focus:border-2 font-bold transition-colors duration-300 ease-in-out text-center hover:bg-blue-100">view profile</button>
   </div>
 
 
@@ -82,9 +84,9 @@ arrowIcon={false}
     <div className="flex flex-col space-y-3 items-start justify-start">
     <h2 className="text-lg font-medium">Account</h2>
     <div className="flex flex-col space-y-2">
-        <p className="cursor-pointer text-gray-600 hover:underline"> Settings & Privacy</p>
-        <p className="cursor-pointer text-gray-600 hover:underline">Help</p>
-        <p className="cursor-pointer text-gray-600 hover:underline">Language</p>
+        <p onClick={() => { setShowDrop(false)}} className="cursor-pointer text-gray-600 hover:underline"> Settings & Privacy</p>
+        <p className="cursor-pointer text-gray-600 hover:underline" onClick={() => { setShowDrop(false)}}>Help</p>
+        <p className="cursor-pointer text-gray-600 hover:underline" onClick={() => { setShowDrop(false)}}>Language</p>
     </div>
     </div>
   </div>
@@ -93,9 +95,9 @@ arrowIcon={false}
     <div className="flex flex-col space-y-3 items-start justify-start">
     <h2 className="text-lg font-medium">Manage</h2>
     <div className="flex flex-col space-y-2">
-        <p className="cursor-pointer text-gray-600 hover:underline"> Posts & Activity</p>
+        <p className="cursor-pointer text-gray-600 hover:underline" onClick={() => { setShowDrop(false)}}> Posts & Activity</p>
        
-        <p className="cursor-pointer text-gray-600 hover:underline">Job Posting Account</p>
+        <p className="cursor-pointer text-gray-600 hover:underline" onClick={() => { setShowDrop(false)}}>Job Posting Account</p>
     </div>
 
  
@@ -110,7 +112,6 @@ arrowIcon={false}
     }} className="cursor-pointer rounded px-3 hover:bg-gray-200 p-1">Sign out </span>   
   </div>
   </div>
-</Dropdown>
     </div>
   )
 }

@@ -25,6 +25,7 @@ const [comments, setComments] = useState([])
 const [likes, setLikes] = useState([])
 const router = useRouter()
 const userValue = useRecoilValue(UserState)
+const [showComment, setShowComment] = useState<boolean>(false)
 
 useEffect(() => {
   onSnapshot(query(collection(firestore, "posts", post.postId, "comments"), orderBy("timeStamp", "desc") ), (snapshot) => {
@@ -97,14 +98,14 @@ await deleteDoc(deleteRef).then(() => {
         }
        
   <div className="flex items-center space-x-2 text-sm text-gray-500 whitespace-nowrap">
-    <p className='cursor-pointer hover:text-blue-600 hover:underline'>{comments.length} comments</p>
+    <p className='cursor-pointer hover:text-blue-600 hover:underline' onClick={() => setShowComment(true)}>{comments.length} comments</p>
     <span>.</span>
     <p className='cursor-pointer hover:text-blue-600 hover:underline'>4 reposts</p>
   </div>  
         </div>
         <hr />
 
-        <LikeComments likes={likes} uid={post.uid} comments={comments} postId={post.postId} />
+        <LikeComments showComment={showComment} setShowComment={setShowComment} likes={likes} uid={post.uid} comments={comments} postId={post.postId} />
 
        
     </div>

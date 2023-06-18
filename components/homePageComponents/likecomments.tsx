@@ -13,19 +13,21 @@ import { toast } from "react-toastify";
 
 
 type Props = {
+  showComment : boolean;
+  setShowComment: React.Dispatch<React.SetStateAction<boolean>>;
   postId : string;
-  comments : any
-  uid : string,
+  comments : any;
+  uid : string;
   likes : any
 };
 
-const LikeComments = ({likes, uid, comments, postId}: Props) => {
+const LikeComments = ({showComment, setShowComment,likes, uid, comments, postId}: Props) => {
   const {commentPost, likePost} = FirebasePostApi()  
   const userValue = useRecoilValue(UserState)
   const [user, loading, error] = useAuthState(auth)
 
  
-    const [showComment, setShowComment] = useState<boolean>(false)
+    
     
 
     const [hashLiked, setHashLiked] = useState<boolean>(false)
