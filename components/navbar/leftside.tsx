@@ -84,7 +84,7 @@ const LeftSide = (props: Props) => {
   :
 
   filterUser.map((item : userType) => (
-    <div onClick={() => {
+    <div key={item.uid} onClick={() => {
       router.push(`/in/${item.uid}`)
       setSearchShow(false)
       setDrakOver(false)

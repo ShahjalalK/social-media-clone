@@ -21,9 +21,6 @@ const ProfileId = (props: Props) => {
   const {userQuery, userPidQuery, getAllUser} = FirebaseFireStoreApi()
   const [queryPosts, setQueryPosts] = useState([])
 
-  console.log("postQuery", queryPosts)
-
-
   const pid = router.query.pid as string
 
   useEffect(() => {
