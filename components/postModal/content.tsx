@@ -6,7 +6,7 @@ type Props = {}
 
 const Content = (props: Props) => {
     const [postText, setPostText] = useRecoilState(addPostData)
-    console.log(postText)
+   
   return (
     <div className="flex flex-col space-y-5">
         <textarea onChange={(e) => {

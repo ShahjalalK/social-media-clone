@@ -32,8 +32,6 @@ const LikeComments = ({showComment, setShowComment,likes, uid, comments, postId}
 
     const [hashLiked, setHashLiked] = useState<boolean>(false)
     
-  console.log("Liked", hashLiked)
-  console.log("likeId", likes.map((item : any) => item.id))
   
 
     const [comment, setComment] = useState<string>("")
