@@ -25,6 +25,7 @@ const NetworkCard = ({item}: Props) => {
 
   const [hashFollow, setHashFollow] = useState<boolean>(false)
 
+  const [hideUser, setHideUser] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -48,9 +49,9 @@ const NetworkCard = ({item}: Props) => {
   };
 
   return (
-    <div className="bg-white rounded-lg border overflow-hidden hover:shadow-lg hover:drop-shadow h-60">
+    <div className={`${hideUser ? "hidden" : " block"} bg-white rounded-lg border overflow-hidden hover:shadow-lg hover:drop-shadow h-60`}>
         <div className="w-full h-20 bg-gray-300 overflow-hidden relative">
-            <div className="w-8 h-8 rounded-full bg-black/70 cursor-pointer absolute top-3 right-3 flex items-center justify-center text-white"><IoCloseSharp className="text-xl" /></div>
+            <div onClick={() => setHideUser(true)} className="w-8 h-8 rounded-full bg-black/70 cursor-pointer absolute top-3 right-3 flex items-center justify-center text-white"><IoCloseSharp className="text-xl" /></div>
             <Image src={item.bgURL} alt='bg' width={350} height={300} className="w-full h-full object-fill" />
         </div>
         <Image onClick={() => router.push(`/in/${item.uid}`)} src={item.photoURL} alt='n' width={50} height={50} className="w-16 h-16 rounded-full border object-cover -mt-10 ml-5 relative cursor-pointer"  />

@@ -25,7 +25,7 @@ const UserMenu = (props: Props) => {
       setShowDrop(!showDrop)
     }
   return (
-    <div className="border-r flex items-center space-x-5 lg:space-x-0  lg:pr-5 whitespace-nowrap">
+    <div className="lg:border-r flex items-center space-x-5 lg:space-x-0  lg:pr-5 whitespace-nowrap">
         <Link href="/" className={`flex flex-col text-gray-500 hover:text-gray-900 text-sm capitalize lg:px-5 py-1 items-center lg:border-b-2 border-transparent   ${router.pathname === "/" ? "!border-gray-900 text-gray-900" : ""} `}>
             <AiFillHome className="text-2xl " />
             <p className="hidden lg:inline-flex">Home</p>
