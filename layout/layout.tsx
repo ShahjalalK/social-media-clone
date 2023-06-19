@@ -51,7 +51,7 @@ useEffect(() => {
         location : "",
         webURL : "",
         description : "",
-        timeStamp : serverTimestamp()
+        timestamp : serverTimestamp()
       })
 
     }

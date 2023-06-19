@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/css";
+
 import "swiper/css/navigation";
 
 import { Autoplay, Navigation} from "swiper";
@@ -48,6 +48,7 @@ const Featured = ({queryPosts}: Props) => {
           spaceBetween: 20,
         },
       }}
+      
       
       autoplay={{
         delay: 5000,

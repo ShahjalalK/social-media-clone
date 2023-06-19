@@ -8,7 +8,9 @@ const LeftSide = (props: Props) => {
   return (
     <div className="hidden lg:flex flex-col space-y-5">
        <ManageNetwork /> 
-       <AddsCard />
+      <div className="lg:sticky lg:top-16">
+      <AddsCard />
+      </div>
     </div>
   )
 }

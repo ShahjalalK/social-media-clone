@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { UserState } from '@/recoil/userAuthAtom'
+import { QueryState, UserState } from '@/recoil/userAuthAtom'
 import { v4 as uuidv4 } from 'uuid';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { auth, firestore, storage } from '@/firebase/firebase.config';
@@ -14,7 +14,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 type Props = {}
 
 const ProfilePhoto = (props: Props) => {
-    const [user, userLoading, error] = useAuthState(auth)
+    const [user, userLoading, error] = useAuthState(auth)    
     const [currentImg, setCurrentImg] = useState<File>()
     const[loading, setLoading] = useState<boolean>(false)
     const userValue =  useRecoilValue(UserState)
@@ -31,10 +31,13 @@ const ProfilePhoto = (props: Props) => {
    }   
   };
 
+
   const uploadeHandler = () => {
     if(!user?.emailVerified){
       return toast("Please verify your email address")
     }
+    
+
     setLoading(true)
 
     const storageRef = ref(storage, `images/${uuidv4()}`);

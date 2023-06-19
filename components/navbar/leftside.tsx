@@ -87,6 +87,7 @@ const LeftSide = (props: Props) => {
     <div key={item.uid} onClick={() => {
       router.push(`/in/${item.uid}`)
       setSearchShow(false)
+      setSearch("")
       setDrakOver(false)
     }} className="flex items-center space-x-2 flex-grow px-2 py-1 cursor-pointer hover:bg-gray-200">
     <BiSearchAlt2 className="text-xl" />

@@ -74,7 +74,7 @@ await deleteDoc(deleteRef).then(() => {
         </div>
         <div>
             <h1 className="text-sm">{post.content}</h1>
-           {post.media && <Image src={post.media} width={350} height={350} alt='bg' className=' w-full h-auto mx-auto mt-3' />} 
+           {post.media && <Image src={post.media} width={350} height={350} alt='bg' className=' w-full h-auto mx-auto mt-3 cursor-pointer' />} 
         </div>
         <div className="flex items-center justify-between">
           {likes.length > 0 ? 

@@ -11,8 +11,9 @@ const HomeLeftSide = (props: Props) => {
   return (
     <div className="flex flex-col space-y-5 lg:sticky lg:top-16">
       <HomeProfileCard />
-      <div className="hidden lg:block">
+      <div className="hidden lg:inline-flex">
       <AddsCard />
+    
       </div>
     </div>
   )

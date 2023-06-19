@@ -47,6 +47,7 @@ const [user, userLoading, error] = useAuthState(auth)
   };
 
   const ProfilePhotoHandaler = () => {
+    if(queryUserValue.uid !== userValue.uid) return;
     setProfileState((prev) => ({
       ...prev,
       open: true,

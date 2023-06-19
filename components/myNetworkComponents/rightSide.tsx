@@ -37,10 +37,12 @@ const result = getRandomItem(array);
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 py-3">
         {result.filter((filt : userType) => filt.uid !== userValue.uid).map((item : userType) => (
           <NetworkCard key={item.uid} item={item} />  
+          
         ))}
         
                                     
             </div>
+            
     </div>
   )
 }

@@ -8,6 +8,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import Layout from '@/layout/layout';
 import EditProfileModal from '@/components/profileModal/editProfileModal';
 import PostModal from '@/components/postModal/postModal';
+import "swiper/css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return <RecoilRoot>

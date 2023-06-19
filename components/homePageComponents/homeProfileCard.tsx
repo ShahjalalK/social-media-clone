@@ -49,7 +49,7 @@ const HomeProfileCard = (props: Props) => {
         </div>
         <Link href="/in/[pid]" as={`/in/${userValue.uid}`}><Image src={userValue.photoURL} alt="u" width={70} height={70} className="-mt-10 w-20 h-20  object-cover bg-white rounded-full mx-auto drop-shadow " /></Link>
         <div className="text-center px-3 pt-1 pb-5 flex flex-col space-y-1">
-            <h3 className="font-medium cursor-pointer hover:text-blue-600 hover:underline capitalize"><Link href="/in/[pid]" as={`/in/${userValue.uid}`}>{userValue.displayName || userValue.email.split("@")[0]}</Link></h3>
+            <h3 className="font-medium cursor-pointer hover:text-blue-600 hover:underline capitalize line-clamp-1"><Link href="/in/[pid]" as={`/in/${userValue.uid}`}>{userValue.displayName || userValue.email.split("@")[0]}</Link></h3>
             <p className="line-clamp-2 text-sm">{userValue.title || "Setup your title..."}</p>
         </div>
         <hr />
