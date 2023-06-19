@@ -1,9 +1,9 @@
 import { firestore } from '@/firebase/firebase.config'
 import { AllPostData, postType } from '@/recoil/postAtom'
 import { UserState } from '@/recoil/userAuthAtom'
-import { addDoc, collection, deleteDoc, doc, endAt, limitToLast, onSnapshot, orderBy, query, serverTimestamp, setDoc, startAfter, startAt, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc } from 'firebase/firestore'
 import React from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 
 const FirebasePostApi = () => {
